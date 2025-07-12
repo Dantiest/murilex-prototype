@@ -1,0 +1,345 @@
+/* BUTTONS __________________________ BUTTONS */
+
+.category-button {
+    margin-top: 0.8rem;
+    cursor: pointer;
+    min-width: 4rem;
+    padding: 0.6rem;
+    border-radius: 25px;
+    color: white;
+    background-color: #7216f4;
+    border: 2px solid black;
+    margin-left: 0.5rem;
+    transition: 0.3s ease-in-out
+}
+
+/* ALL */
+
+.all {
+    position: relative;
+    width: 100%;
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+
+/* CATEGORY-ROWS _________________________________ */
+
+.category-row {
+    width: 100%;
+    background-color: black;
+    height: 3rem;
+    color: var(--text-secondary);
+    border-radius: 25px;
+    align-items: center;
+    display: flex;
+    border: 3px solid #7216f4;
+    position: relative;
+    margin-top: 1.2rem;
+}
+
+/*    TABLES _____________________________________________________________________________     TABLES   */
+
+
+
+/* SONGS_ALBUMS_TABLE   _________________________   SONGS_ALBUMS_TABLE */
+
+.category-table {
+    width: 100%;
+    height: auto;
+    margin-top: 0.5rem;
+    flex-direction: column;
+}
+
+.title-row {
+    background-color: black;
+    color: white;
+    font-family: 'Lato', sans-serif;
+    width: 100%;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.title-row .name {
+    position: relative;
+    margin-left: 4.5%;
+}
+
+.title-row .title-author {
+    position: absolute;
+    margin-left: 27.5%;
+}
+
+.title-row .title-price {
+    position: absolute;
+    margin-left: 49%;
+}
+
+.title-row .title-available {
+    position: absolute;
+    margin-left: 75%;
+}
+
+.title-row .title-add {
+    position: absolute;
+    right: 0.7%;
+}
+
+
+/*  CATALOGUES_TABLE    ________________     CATALOGUES_TABLE  */
+
+/* ROWS ________________ ROWS */ 
+
+.category-table .row {
+    width: 100%;
+    display: flex;
+    height: 3rem;
+    align-items: center;
+    border-bottom: 3px solid #7216f4;  
+    position: relative;
+}
+
+
+.row .image-song{
+    height: 80%;
+    position: relative;
+    margin-left: 2%;
+    cursor: pointer;
+}
+
+.row .name{
+    position: relative;
+    margin-left: 8.5px;
+    cursor: pointer;
+}
+
+.row .author {
+    position: absolute;
+    margin-left: 27.5%;
+    height: calc(3rem *0.8);
+    width: 20%;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.type-svg {
+    margin-left: 0;
+}
+
+.type-svg svg {
+    fill: black;
+    height: 1rem
+}
+
+
+.author .author-image{
+    height: 100%;
+    position: relative;
+}
+
+.author .author-name{
+    position: relative;
+    margin-left: 10%;
+    cursor: pointer;
+}
+
+
+.row .price {
+    position: absolute;
+    margin-left: 49%;
+    display: flex;
+}
+
+.row .graph{
+    height: 3rem;
+    margin-left: 56%;
+    position: absolute;
+}
+
+.row .available{
+    position: absolute;
+    margin-left: 75%;
+}
+
+
+.row .rmv {
+    position: absolute;
+    right: 3%;
+    cursor: pointer;
+}
+
+.rmv svg {
+    fill: #7216f4;
+    height: 1.5rem;
+}
+
+
+/* ROWS ________________ ROWS */
+
+.category-table .row {
+    width: 100%;
+    display: flex;
+    height: 3rem;
+    align-items: center;
+    border-bottom: 3px solid #7216f4;  
+}
+
+
+.row .numb {
+    margin-left: 1.5rem;
+}
+
+.row .title {
+    position: absolute;
+    margin-left: 5%;
+    height: calc(3rem *0.8);
+    max-width: 20%;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.title .image-song{
+    height: 100%;
+    position: relative;
+}
+
+.title .song-name{
+    position: relative;
+    margin-left: 10%;
+    cursor: pointer;
+    height: 1rem;
+    white-space: nowrap;
+}
+
+.row .author {
+    position: absolute;
+    margin-left: 27.5%;
+    height: calc(3rem *0.8);
+    max-width: 20%;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.author .author-image{
+    height: 100%;
+    position: relative;
+}
+
+.author .author-name{
+    position: relative;
+    margin-left: 10%;
+    cursor: pointer;
+    height: 1rem;
+    white-space: nowrap;
+}
+
+
+.row .price {
+    position: absolute;
+    margin-left: 49%;
+}
+
+.row .graph{
+    height: 3rem;
+    margin-left: 56%;
+    position: absolute;
+}
+
+.row .available{
+    position: absolute;
+    margin-left: 75%;
+}
+
+
+/*  BOTTOM _______________________________ BOTTOM  */
+
+.bottom {
+    position: fixed;
+    height: 5rem;
+    width: calc(100% + 1rem);
+    bottom: 0;
+    left: 1px;
+    display: flex;
+    align-items: center;
+    border: 2px solid #7216f4;
+}
+
+.bottom .division {
+    border: 1px solid grey;
+    background-color: black;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.division .top-stat {
+    width: 100%;
+    height: 72%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+.division .bottom-title {
+    width: 100%;
+    height: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+#pending {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+/* GRAPH ___________________________ GRAPH */
+
+/* Style the x-axis and y-axis ticks and labels */
+.x-axis path,
+.x-axis line,
+.y-axis path,
+.y-axis line {
+    fill: none;
+    shape-rendering: crispEdges;
+}
+
+.x-axis text {
+    font-size: 12px;
+    text-anchor: middle;
+}
+
+.y-axis text {
+    font-size: 12px;
+}
+
+/* Style chart title and labels if you have them */
+.chart-title {
+    font-size: 18px;
+    font-weight: bold;
+    text-anchor: middle;
+}
+
+.axis-label {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+path.line {
+    fill: none;
+    stroke: #7216f4;
+    stroke-width: 3.5;
+}

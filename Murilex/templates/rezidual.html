@@ -1,0 +1,346 @@
+@app.route('/asset/<asset_name>')
+    def asset(asset_name):
+        connection = sqlite3.connect("murexe.db")
+        cursor = connection.cursor()
+    
+        # Named tuple structure for Album
+        Asset = namedtuple(
+            'Asset',
+            ['id', 'name', 'image', 'price', 'availability', 'author_name', 'author_image', 'category', 'asset_type']
+        )
+    
+        # Fetch data from both tables and filter by the asset name
+        cursor.execute("""
+            SELECT song.id, song.name, song.image, song.price, song.availability, artist.name AS author_name, artist.image AS author_image, categories.name AS category_name
+            FROM song
+            INNER JOIN artist ON song.artist_id = artist.id
+            INNER JOIN categories ON song.category_id = categories.id
+            WHERE song.name = ?
+            UNION
+            SELECT album.id, album.name, album.image, album.price, album.availability, artist.name AS author_name, artist.image AS author_image, categories.name AS category_name
+            FROM album
+            INNER JOIN artist ON album.artist_id = artist.id
+            INNER JOIN categories ON album.category_id = categories.id
+            WHERE album.name = ? """, (asset_name, asset_name))
+        asset_raw = cursor.fetchone()
+        
+        # Determine the asset type based on the fetched data
+        if asset_raw:
+            asset_type = "song" if asset_raw[2] == "song" else "album" if asset_raw[2] == "album" else "catalogue"  # Assuming column position 2 indicates asset type
+            asset_tuple = Asset(*asset_raw, asset_type)
+            asset_data = asset_tuple._asdict()
+        else:
+            asset_data = None
+    
+        return render_template('asset.html', asset=asset_data)
+
+// ROWS 
+
+const all_add = document.querySelectorAll(".row .add");
+const all_rmv = document.querySelectorAll(".row .rmv");
+const watchlist = document.getElementById("watchlist");
+
+const names = document.querySelectorAll(".row .name");
+const images = document.querySelectorAll(".row .image-song");
+const selectedImage = document.querySelector(".selected-image");
+const selectedName = document.querySelector(".selected-name");
+const selectedMsg = document.querySelector(".add_or_rmv");
+const Display = document.querySelector(".display");
+
+let displayVisible = false;
+
+all_add.forEach((link, index) => {
+    link.addEventListener('click', function(event) {
+        event.preventDefault();
+        link.style.display = "none";
+        all_rmv[index].style.display = "block";
+        total++;
+        updatePulseAnimation();
+        if(displayVisible) {
+            Display.classList.remove('show');
+            setTimeout(function() {
+                showAdded(index);
+            }, 500);
+        }
+        else {
+            showAdded(index);
+        }
+    });
+});
+
+all_rmv.forEach((link, index) => {
+    link.addEventListener('click', function(event) {
+        event.preventDefault();
+        link.style.display = "none";
+        all_add[index].style.display = "block";
+        total--;
+        updatePulseAnimation();
+        if(displayVisible) {
+            Display.classList.remove('show');
+            setTimeout(function() {
+                showRemoved(index);
+            }, 500);
+        }
+        else {
+            showRemoved(index);
+        }
+    });
+});
+
+//DISPLAY ANIMATION
+
+function showAdded(ind) {
+    const image = images[ind].getAttribute('data-value');
+    selectedImage.src = image;
+    const name = names[ind].getAttribute('data-value');
+    selectedName.textContent = name;
+    selectedMsg.textContent = "Added  to";
+
+    displayVisible = true;
+    Display.classList.add('show'); // Apply the 'show' class to trigger the transition
+
+    setTimeout(() => {
+        displayVisible = false;
+        Display.classList.remove('show'); // Remove the 'show' class after 5 seconds
+    }, 7000); // Hide after 5000 milliseconds (5 seconds)
+}
+
+function showRemoved(ind) {
+    const image = images[ind].getAttribute('data-value');
+    selectedImage.src = image;
+    const name = names[ind].getAttribute('data-value');
+    selectedName.textContent = name;
+    selectedMsg.textContent = "Removed  from";
+
+    displayVisible = true;
+    Display.classList.add('show'); // Apply the 'show' class to trigger the transition
+
+    setTimeout(() => {
+        displayVisible = false;
+        Display.classList.remove('show'); // Remove the 'show' class after 5 seconds
+    }, 7000); // Hide after 5000 milliseconds (5 seconds)
+}
+
+{% if watchlist_count[item.id] > 0 %}
+<a class="rmv" id="removeButton" data-item-id="{{ item.id }}" data-asset-type="{{ asset_type }}" data-action="remove">
+<svg xmlns="http://www.w3.org/2000/svg" style="fill: #7216f4" height="1.5rem" viewBox="0 0 448 512"><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zm88 200H296c13.3 0 24 10.7 24 24s-10.7 24-24 24H152c-13.3 0-24-10.7-24-24s10.7-24 24-24z"/></svg>
+</a>
+{% else %}
+<a class="add" id="addButton" data-item-id="{{ item.id }}" data-asset-type="{{ asset_type }}" data-action="add">
+<svg style="fill: #7216f4" xmlns="http://www.w3.org/2000/svg" height="1.5rem" viewBox="0 0 448 512"><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zM200 344V280H136c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H248v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"/></svg>
+</a>
+{% endif %}
+
+        <!--{% if watchlist_count[item.id] > 0 %}!-->
+        <svg id="category_add" height="3rem" xmlns="http://www.w3.org/2000/svg" style="fill: #7216f4; cursor: pointer" viewBox="0 0 512 512"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 344V280H168c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H280v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"/></svg>
+        <!--{% else %}!-->
+            <svg id="category_rmv" xmlns="http://www.w3.org/2000/svg" height="3rem" style="display: none; cursor: pointer; fill: #7216f4" viewBox="0 0 512 512"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/></svg>
+        <!--{% endif %}!-->
+
+        {% if category_watchlist_count[category_id] > 0 %}
+        <a class="rmv" id="removeButton" data-item-id="{{ category_id }}" data-asset-type="{{ asset_type }}" data-action="remove">
+            <svg xmlns="http://www.w3.org/2000/svg" style="fill: #7216f4" height="3rem" viewBox="0 0 448 512"><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zm88 200H296c13.3 0 24 10.7 24 24s-10.7 24-24 24H152c-13.3 0-24-10.7-24-24s10.7-24 24-24z"/></svg>
+        </a>
+    {% else %}
+        <a class="add" id="addButton" data-item-id="{{ category_id }}" data-asset-type="{{ asset_type }}" data-action="add">
+            <svg xmlns="http://www.w3.org/2000/svg" style="fill: #7216f4" height="3rem" viewBox="0 0 448 512"><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zM200 344V280H136c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H248v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"/></svg>
+        </a>
+    {% endif %}
+
+    # Handling categories
+    category_watchlist_count = {}
+
+    cursor.execute('SELECT COUNT(*) FROM watchlist WHERE user_id = ? AND item_id = ? AND item_type = ?',
+                (user_id, category_id, asset_type))
+    count = cursor.fetchone()[0]
+    category_watchlist_count[category_id] = count
+
+    # Handling categories
+    category_watchlist_count = {}
+
+    cursor.execute('SELECT COUNT(*) FROM watchlist WHERE user_id = ? AND item_id = ? AND item_type = ?',
+                (user_id, category_id, asset_type))
+    count = cursor.fetchone()[0]
+    category_watchlist_count[category_id] = count
+
+    category_watchlist_count=category_watchlist_count,
+
+    {% if category_watchlist_count[category_id] > 0 %}
+    <a class="add" id="category_add" data-item-id="{{ category_id }}" data-asset-type="{{ asset_type }}" data-action="add">
+        <svg xmlns="http://www.w3.org/2000/svg" style="fill: #7216f4" height="3rem" viewBox="0 0 448 512"><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zm88 200H296c13.3 0 24 10.7 24 24s-10.7 24-24 24H152c-13.3 0-24-10.7-24-24s10.7-24 24-24z"/></svg>
+    {% else %}
+    <a class="rmv" id="category_rmv" data-item-id="{{ category_id }}" data-asset-type="{{ asset_type }}" data-action="remove">
+        <svg xmlns="http://www.w3.org/2000/svg" style="fill: #7216f4" height="3rem" viewBox="0 0 448 512"><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zM200 344V280H136c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H248v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"/></svg>
+    {% endif %}
+
+    {% if category_watchlist_count[category_id] > 0 %}
+    <a class="rmvcategory" data-item-id="{{ category_id }}" data-action="remove">
+        <svg xmlns="http://www.w3.org/2000/svg" style="fill: #7216f4" height="3rem" viewBox="0 0 448 512"><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zm88 200H296c13.3 0 24 10.7 24 24s-10.7 24-24 24H152c-13.3 0-24-10.7-24-24s10.7-24 24-24z"/></svg>
+    </a>
+    <a class="addcategory_secondary" data-item-id="{{ category_id }}" data-action="add">
+        <svg style="fill: #7216f4" xmlns="http://www.w3.org/2000/svg" height="3rem" viewBox="0 0 448 512"><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zM200 344V280H136c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H248v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"/></svg>
+    </a>
+{% else %}
+    <a class="addcategory" data-item-id="{{ category_id }}" data-action="add">
+        <svg xmlns="http://www.w3.org/2000/svg" style="fill: #7216f4" height="3rem" viewBox="0 0 448 512"><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zM200 344V280H136c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H248v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"/></svg>
+    </a>
+    <a class="rmvcategory_secondary" data-item-id="{{ category_id }}" data-action="remove">
+        <svg xmlns="http://www.w3.org/2000/svg" style="fill: #7216f4" height="3rem" viewBox="0 0 448 512"><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zm88 200H296c13.3 0 24 10.7 24 24s-10.7 24-24 24H152c-13.3 0-24-10.7-24-24s10.7-24 24-24z"/></svg>
+    </a>
+{% endif %}
+
+//  CATEGORIES
+
+const addButton = document.querySelector(".addcategory, .addcategory_secondary");
+const removeButton = document.querySelector(".rmvcategory, rmvcategory_secondary");
+
+console.log("addButton:", addButton);
+console.log("removeButton:", removeButton);
+
+addButton.addEventListener("click", function () {
+    const categoryId = addButton.getAttribute("data-item-id");
+    manageCategory(categoryId, "add");
+});
+
+removeButton.addEventListener("click", function () {
+    const categoryId = removeButton.getAttribute("data-item-id");
+    manageCategory(categoryId, "remove");
+});
+
+async function manageCategory(categoryId, action) {
+    try {
+        const response = await fetch('/manage_categories', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                category_id: categoryId,
+                action: action
+            })
+        });
+
+        const data = await response.json();
+        console.log(data.message);  // Log the response message from the server
+
+        // You can update the UI or display a message to the user based on the response
+    } catch (error) {
+        console.error('Error:', error);
+        // Handle error cases, such as failed fetch or invalid JSON response
+    }
+}
+
+
+# Initialize order book dictionaries
+buy_order_book = {}  # {price: [order1, order2, ...]}
+sell_order_book = {}  # {price: [order1, order2, ...]}
+
+def process_buy_order(order):
+    price = order['price']
+    if price in buy_order_book:
+        buy_order_book[price].append(order)
+        print(buy_order_book[price])
+    else:
+        buy_order_book[price] = [order]
+        print(buy_order_book[price])
+
+def process_sell_order(order):
+    price = order['price']
+    if price in sell_order_book:
+        sell_order_book[price].append(order)
+    else:
+        sell_order_book[price] = [order]
+
+def emit_order_book_update():
+    order_book = {
+        'buy': buy_order_book,
+        'sell': sell_order_book
+    }
+
+
+# Initialize order book dictionaries
+buy_order_book = {}  # {price: [order1, order2, ...]}
+sell_order_book = {}  # {price: [order1, order2, ...]}
+
+def process_buy_order(order):
+    price = order['price']
+    if price in buy_order_book:
+        buy_order_book[price].append(order)
+        print(buy_order_book[price])
+    else:
+        buy_order_book[price] = [order]
+        print(buy_order_book[price])
+
+def process_sell_order(order):
+    price = order['price']
+    if price in sell_order_book:
+        sell_order_book[price].append(order)
+    else:
+        sell_order_book[price] = [order]
+
+def emit_order_book_update():
+    order_book = {
+        'buy': buy_order_book,
+        'sell': sell_order_book
+    }
+
+    # Calculate and include price change for each asset in the order book
+    for asset_id, orders in buy_order_book.items():
+        for order in orders:
+            asset_type = order['asset_type']
+            price_change = calculate_price_change(asset_id)
+            order['price_change'] = price_change
+
+
+    for asset_id, orders in sell_order_book.items():
+        for order in orders:
+            asset_type = order['asset_type']
+            price_change = calculate_price_change(asset_id)
+            order['price_change'] = price_change
+
+    socketio.emit('order_book_update', order_book)
+
+    data-user-id="{{ session['user_id'] }}"
+
+    <a href="#" id="logout" class="nav-second" class="logout"></a>
+
+    
+class PriceChangeNamespace(Namespace):
+def on_calculate_price_change(self, data):
+    try:
+        asset_id = data['asset_id']
+        asset_type = data['asset_type']
+
+        # Calculate the price change for the specified asset_id and asset_type
+        price_change = calculate_price_change(asset_id, asset_type, timestamp)
+        print('price change=', price_change)
+
+        # Emit a price change event to the client that requested it
+        emit('price_change', {'asset_id': asset_id, 'asset_type': asset_type, 'price_change': price_change})
+    except Exception as error:
+        # Handle exceptions here, e.g., log the error
+        print("Error in on_calculate_price_change:", error)
+        return jsonify({"error": "Guess what bitch, something in on_calculate_price_change went wrong"})
+
+price_change_namespace = PriceChangeNamespace('/price_change')
+socketio.on_namespace(price_change_namespace)
+
+class PriceNamespace(Namespace):
+def on_get_price(self, data):
+    try:
+        asset_id = data['asset_id']
+        asset_type = data['asset_type']
+
+        # Calculate the price change for the specified asset_id and asset_type
+        price = get_price(asset_id, asset_type)
+        print('price=', price)
+
+        # Emit a price change event to the client that requested it
+        emit('price', {'asset_id': asset_id, 'asset_type': asset_type, 'price': price})
+    except Exception as error:
+        # Handle exceptions here, e.g., log the error
+        print("Error in on_calculate_price_change:", error)
+        return jsonify({"error": "Guess what bitch, something in on_calculate_price_change went wrong"})
+
+price_namespace = PriceNamespace('/price')
+socketio.on_namespace(price_namespace)

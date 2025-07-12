@@ -1,0 +1,83 @@
+
+// D3 GRAPHS
+
+function createChart(data, chartContainer) {
+    // Set up SVG dimensions
+    const width = 800;
+    const height = 500;
+    const margin = { top: 20, right: 20, bottom: 30, left: 40 };
+
+    const svg = d3.select(chartContainer)
+    .append('svg')
+    .attr('width', '110%') // Set the width to 100% of the container
+    .attr('height', '110%') // Set the height to 100% of the container
+    .attr('preserveAspectRatio', 'xMinYMin meet')
+    .attr('viewBox', `0 0 ${width} ${height}`);
+
+    // Sort the data by timestamp in ascending order
+    data.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+
+    // Extract timestamp and price data
+    const dates = data.map(d => new Date(d.timestamp)); // Parse timestamps into Date objects
+    const prices = data.map(d => d.price);
+
+    // Create scales for x and y axes
+    const x = d3.scaleTime()
+        .domain([d3.min(dates), d3.max(dates)]) // Assuming 'dates' is an array of Date objects
+        .range([margin.left, width - margin.right]);
+
+    const yMax = d3.max(prices);
+    const yBuffer = 0.1 * yMax; // 10% buffer beyond the highest point
+    
+    const y = d3.scaleLinear()
+        .domain([0, yMax + yBuffer]) // Extend the domain
+        .nice()
+        .range([height - margin.bottom, margin.top]);
+
+    // Create a group for data points (circles or points)
+    const dataPoints = svg.selectAll('.data-point')
+        .data(data)
+        .enter()
+        .append('circle')
+        .attr('class', 'data-point')
+        .attr('cx', (d, i) => x(new Date(d.timestamp)))
+        .attr('cy', d => y(d.price))
+        .attr('r', 5) // Radius of the data points
+        .style('fill', 'red') // Color of the data points
+        .style('opacity', 0)
+        .style('stroke', '#fff')
+        .style('stroke-width', '2');
+    
+    // Create a line generator
+    const line = d3.line()
+        .x(d => x(new Date(d.timestamp))) // Use x scale with Date objects
+        .y(d => y(d.price))
+        .curve(d3.curveLinear); // Apply the curve interpolation
+
+
+    // Append a path element for the line
+    svg.append('path')
+        .datum(data)
+        .attr('class', 'line')
+        .attr('d', line);
+
+    // Add x and y axes
+    svg.append('g')
+        .attr('class', 'x-axis')
+        .attr('transform', `translate(0,${height - margin.bottom})`)
+        //.call(d3.axisBottom(x).tickValues(getTickValues(dates, 3))); // Specify the number of tick values
+        .call(d3.axisBottom(x).tickValues([]))
+
+    svg.append('g')
+        .attr('class', 'y-axis')
+        .attr('transform', `translate(${margin.left},0)`)
+        .call(d3.axisLeft(y));
+        
+    svg.selectAll('text').style('font-size', '20px'); // Adjust the font-size value
+
+    svg.selectAll('.bar')
+    .data(data)
+    .enter().append('rect')
+    .attr('class', 'bar')
+
+}

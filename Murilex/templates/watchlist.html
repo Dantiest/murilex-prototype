@@ -1,0 +1,347 @@
+{% extends "layout.html" %}
+
+{% block title %}Murilex | Watchlist{% endblock %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/watchlist.css')}}" />
+ 
+{% if catalogs or songs or albums or categories %}
+
+    <button class="category-button category-button-all">ALL</button>
+    <button class="category-button category-button-catalogues">CATALOGUES</button>
+    <button class="category-button category-button-albums">ALBUMS</button>
+    <button class="category-button category-button-songs">SONGS</button>
+    <button class="category-button category-button-categories">CATEGORIES</button>
+
+    <div class="all">
+    
+        <!-- ________________________ CATALOGUE _________________________  -->
+        {% if catalogs %}
+            
+            <div class="category-row" id="catalogues-title">
+                <h2 style="margin-left: 2rem;">CATALOGUES</h2>
+            </div>
+            <div class="division-all">
+                {% for catalog in catalogs %}
+
+                    <div data-value="{{ loop.index }}" class="catalogue" id="catalogues-all">
+                        <a class="remove" data-item-id="{{ catalog.id }}" data-asset-type="catalogue">REMOVE</a>
+                        <div class="catalogue-image" style="background-image: url({{ catalog.author_image }});"></div>
+                        <div class="container">
+                            <div data-item-id="{{ catalog.id }}" data-asset-type="catalogue" id="chart-container" data-chart-container class="graph">
+
+                                <!--<img src="{{ url_for('static', filename='image/murexe_out.jpg') }}"> -->
+                            </div>
+                            <div class="stats">
+                                <a style="font-weight: 800; text-decoration: none; color: white" href="{{ url_for('details.artists', artist_id=catalog.artist_id)}}">{{ catalog.author_name }}</a>
+                            </div>
+                            <div class="stats">
+                                <txt>Price:</txt>
+                                <txt data-asset-id="{{ catalog.id }}" data-asset-type="catalogue" style="margin-left: 0.2vw; font-weight: 800;" class="price"><txt class="price-value">{{ catalog.price }} $&nbsp;&nbsp;</txt></txt>
+                                <txt>Shares:</txt>
+                                <txt style="margin-left: 0.2vw; font-weight: 800;">{{ catalog.shares }}</txt>
+                            </div>
+                            <!--<div class="stats">
+                                <txt>Shares:</txt>
+                                <txt style="margin-left: 0.2vw; font-weight: 800;">{{ catalog.shares }}</txt>
+                            </div>-->
+                        </div>
+                        <txt data-asset-id="{{ catalog.id }}" data-asset-type="catalogue"  class="catalogue-change" class="price-change" style="margin-left: 0.5vw;"> {{ catalog.price_change }} % </txt>
+                        <a href="{{ url_for('details.asset', asset_name=catalog.author_name, type='catalogue')}}" class="buy">
+                            <txt>TRADE</txt>
+                        </a>
+                    </div>
+
+                {% endfor %}
+            </div>
+
+        {% else %}
+
+        <div id="catalogues-title"></div>
+        <div id="catalogues-all"></div>
+
+        {% endif %}
+        
+    <!-- ________________________ ALBUMS _________________________  -->
+        {% if albums %}
+            
+            <div class="category-row"  id="albums-title">
+                <h2 style="margin-left: 2rem;">ALBUMS</h2>
+            </div>
+            <div class="division-all">
+                {% for album in albums %}
+
+                    <div data-value="{{ loop.index }}" class="cover only-all" id="albums-all">
+                        <a class="remove" data-item-id="{{ album.id }}" data-asset-type="album">REMOVE</a>
+                        <txt  class="catalogue-change" class="price-change" style="margin-left: 0.5vw;"> {{ album.price_change }} % </txt>
+                        
+                        <div class="cover-image" style="background-image: url({{ album.image }});"></div>
+
+
+                        <div class="title">
+                            <txt>{{ album.name }}</txt>
+                        </div>
+                        <div class="stats">
+                            <a class="author-image" style="background-image: url({{ album.author_image }}); background-size: cover; background-position: center center; background-repeat: no-repeat;" href="{{ url_for('details.artists', artist_id=album.artist_id)}}"></a>
+                            <a style="font-weight: 800; margin-left: 0.5vw; text-decoration: none; color: white;" href="{{ url_for('details.artists', artist_id=album.artist_id)}}">{{ album.author_name }}</a>
+                        </div>
+                        <div class="stats">
+                            <txt>Price:</txt>
+                            <txt data-asset-id="{{ album.id }}" data-asset-type="album" style="margin-left: 0.2vw; font-weight: 800;" class="price"><txt class="price-value">{{ album.price }} $</txt></txt>
+                        </div>
+                        <div class="stats">
+                            <txt>Shares:</txt>
+                            <txt style="font-weight: 800;">{{ album.availability }}</txt>
+                        </div>
+
+                        <div data-item-id="{{ album.id }}" data-asset-type="album" id="chart-container" class="graph">
+
+                                <!--<img src="{{ url_for('static', filename='image/murexe_out.jpg') }}"> -->
+                        </div>
+
+                        <a href="{{ url_for('details.asset', asset_name=album.name, type='album')}}" class="buy">
+                            <txt>TRADE</txt>
+                        </a>
+
+                    </div>
+
+                {% endfor %}
+                <div class="hidden-song"></div>
+                <div class="hidden-song"></div>
+            </div>
+
+        {% else %}
+
+        <div id="albums-title"></div>
+        <div id="albums-all"></div>
+        
+        {% endif %}
+
+        
+
+
+            <!-- ________________________ SONGS _________________________  -->
+        {% if songs %}
+
+            <div class="category-row" id="songs-title">
+                <h2 style="margin-left: 2rem;">SONGS</h2>
+            </div>
+
+            <div class="division-all">
+                {% for song in songs %}
+                    <div data-value="{{ loop.index }}" class="cover only-all" id="songs-all">
+                        <a class="remove" data-item-id="{{ song.id }}" data-asset-type="song">REMOVE</a>
+                        
+                        
+                        <div class="cover-image" style="background-image: url({{ song.image }});"></div>
+
+
+                        <div class="title">
+                            <txt>{{ song.name }}</txt>
+                        </div>
+                        <div class="stats">
+                            <a class="author-image" style="background-image: url({{ song.author_image }}); background-size: cover; background-position: center center; background-repeat: no-repeat;" href="{{ url_for('details.artists', artist_id=song.artist_id)}}"></a>
+                            <a style="font-weight: 800; margin-left: 0.5vw; text-decoration: none; color: white;" href="{{ url_for('details.artists', artist_id=song.artist_id)}}">{{ song.author_name }}</a>
+                        </div>
+                        <div class="stats">
+                            <txt>Price:</txt>
+                            <txt data-asset-id="{{ song.id }}" data-asset-type="song" style="margin-left: 0.2vw; font-weight: 800;" class="price"><txt class="price-value">{{ song.price }} $</txt><txt  class="catalogue-change" class="price-change" style="margin-left: 0.5vw;"> {{ song.price_change }} % </txt></txt>
+                        </div>
+                        <div class="stats">
+                            <txt>Shares:</txt>
+                            <txt style="font-weight: 800;">{{ song.availability }}</txt>
+                        </div>
+
+                        <div data-item-id="{{ song.id }}" data-asset-type="song" id="chart-container" class="graph">
+
+                                <!--<img src="{{ url_for('static', filename='image/murexe_out.jpg') }}"> -->
+                        </div>
+
+                        <a class="buy" href="{{ url_for('details.asset', asset_name=song.name, type='song')}}">
+                            <txt>TRADE</txt>
+                        </a>
+
+                    </div>
+
+
+                {% endfor %}
+                <div class="hidden-song"></div>
+                <div class="hidden-song"></div>
+            </div>
+
+        {% else %}
+
+        <div id="songs-title"></div>
+        <div id="songs-all"></div>
+
+        {% endif %}
+
+
+
+        <!-- TABLES ______________________________ TABLES -->
+
+        {% if catalogs %}
+        <div class="category-table" id="catalogues-table">
+            <div class="title-row">
+                <txt class="name"> Author</txt>
+                <txt class="title-author"></txt>
+                <txt class="title-price"> Price </txt>
+                <txt class="title-available"> Available </txt>
+                <txt class="title-add" style="padding-right: 2rem;"> Remove </txt>
+            </div>
+            {% for catalog in catalogs %}
+            <div data-value="{{ loop.index }}" class="row">
+                <a class="title" href="{{ url_for('details.artists', artist_id=catalog.artist_id)}}">
+                    <img class="image-song" src="{{ catalog.author_image }}">
+                    <div class="song-name">{{ catalog.author_name }}</div>
+                </a>
+
+                <txt data-asset-id="{{ catalog.id }}" data-asset-type="catalogue" class="price"><txt class="price-value">{{ catalog.price }} $</txt><txt class="price-change" style="margin-left: 0.5vw;"> {{ catalog.price_change }}% </txt></txt>
+                <div data-item-id="{{ catalog.id }}" data-asset-type="catalogue" id="chart-container" class="graph">
+
+                    <!--<img src="{{ url_for('static', filename='image/murexe_out.jpg') }}"> -->
+                </div>
+                <txt class="available">{{ catalog.shares }}</txt>
+                <a class="rmv" data-item-id="catalue.id" data-asset-type="catalogue"><svg xmlns="http://www.w3.org/2000/svg" style="fill: #7216f4" height="1.5rem" viewBox="0 0 448 512"><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zm88 200H296c13.3 0 24 10.7 24 24s-10.7 24-24 24H152c-13.3 0-24-10.7-24-24s10.7-24 24-24z"/></svg></a>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="category-table" id="catalogues-table">
+            <div class="title-row">
+                <txt class="name"> No Catalogues Added </txt>
+           </div>
+        </div>
+        {% endif %}
+
+        {% if albums %}
+        <div class="category-table" id="albums-table">
+            <div class="title-row">
+                <txt class="name"> Title </txt>
+                <txt class="title-author"> Author </txt>
+                <txt class="title-price"> Price </txt>
+                <txt class="title-available"> Available </txt>
+                <txt class="title-add" style="padding-right: 2rem;"> Remove </txt>
+            </div>
+            {% for album in albums %}
+            <div data-value="{{ loop.index }}" class="row">        
+                <a class="title" href="{{ url_for('details.asset', asset_name=album.name, type='album')}}">
+                    <img class="image-song" src="{{ album.image }}">
+                    <div class="song-name">{{ album.name }}</div>
+                </a>
+        
+                <a class="author" href="{{ url_for('details.artists', artist_id=album.artist_id)}}">
+                    <img  class="author-image" src="{{ album.author_image }}">
+                    <txt class="author-name">{{ album.author_name }}</txt>
+                </a>
+                
+        
+                <txt data-asset-id="{{ album.id }}" data-asset-type="album" class="price"><txt class="price-value">{{ album.price }} $</txt><txt class="price-change" style="margin-left: 0.5vw;"> {{ album.price_change }}% </txt></txt>
+                <div data-item-id="{{ album.id }}" data-asset-type="album" id="chart-container" class="graph">
+
+                    <!--<img src="{{ url_for('static', filename='image/murexe_out.jpg') }}"> -->
+                </div>
+                <txt class="available">{{ album.availability }}</txt>
+                <a class="rmv" data-item-id="{{ album.id }}" data-asset-type="album"><svg xmlns="http://www.w3.org/2000/svg" style="fill: #7216f4" height="1.5rem" viewBox="0 0 448 512"><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zm88 200H296c13.3 0 24 10.7 24 24s-10.7 24-24 24H152c-13.3 0-24-10.7-24-24s10.7-24 24-24z"/></svg></a>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="category-table" id="albums-table" >
+            <div class="title-row">
+                <txt class="name"> No Albums Added </txt>
+           </div>
+        </div>
+        {% endif %}
+
+        {% if songs %}
+        <div class="category-table" id="songs-table">
+            <div class="title-row">
+                <txt class="name"> Title </txt>
+                <txt class="title-author"> Author </txt>
+                <txt class="title-price"> Price </txt>
+                <txt class="title-available"> Available </txt>
+                <txt class="title-add" style="padding-right: 2rem;"> Remove </txt>
+            </div>
+            {% for song in songs %}
+            <div data-value="{{ loop.index }}" class="row">        
+                <a class="title" href="{{ url_for('details.asset', asset_name=song.name, type='song')}}">
+                    <img class="image-song" src="{{ song.image }}">
+                    <div class="song-name">{{ song.name }}</div>
+                </a>
+        
+                <a class="author" href="{{ url_for('details.artists', artist_id=song.artist_id)}}">
+                    <img  class="author-image" src="{{ song.author_image }}">
+                    <txt class="author-name">{{ song.author_name }}</txt>
+                </a>
+                
+        
+                <txt data-asset-id="{{ song.id }}" data-asset-type="song" class="price"><txt class="price-value">{{ song.price }} $</txt><txt class="price-change" style="margin-left: 0.5vw;"> {{ song.price_change }}% </txt></txt>
+                <div data-item-id="{{ song.id }}" data-asset-type="song" id="chart-container" class="graph">
+
+                    <!--<img src="{{ url_for('static', filename='image/murexe_out.jpg') }}"> -->
+                </div>
+                <txt class="available">{{ song.availability }}</txt>
+                <a class="rmv" data-item-id="{{ song.id }}" data-asset-type="song"><svg xmlns="http://www.w3.org/2000/svg" style="fill: #7216f4" height="1.5rem" viewBox="0 0 448 512"><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zm88 200H296c13.3 0 24 10.7 24 24s-10.7 24-24 24H152c-13.3 0-24-10.7-24-24s10.7-24 24-24z"/></svg></a>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="category-table" id="song-table" >
+            <div class="title-row">
+                <txt class="name"> No Songs Added </txt>
+           </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- CATEGORIES ________________________________ CATEGORIES -->
+    {% if categories %}
+        <div class="category-row" id="categories-title">
+            <h2 style="margin-left: 2rem;">CATEGORIES</h2>
+        </div>
+
+        <div class="categories" id="categories">
+            {% for category in categories %}
+                <div class="box zoom-out" style="background-image: url('{{ category.image }}');">
+                    <div class="type">
+                        <a href="{{ url_for('main.category', category_name=category.name, asset_type='song') }}" id="songs" class="piece">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M499.1 6.3c8.1 6 12.9 15.6 12.9 25.7v72V368c0 44.2-43 80-96 80s-96-35.8-96-80s43-80 96-80c11.2 0 22 1.6 32 4.6V147L192 223.8V432c0 44.2-43 80-96 80s-96-35.8-96-80s43-80 96-80c11.2 0 22 1.6 32 4.6V200 128c0-14.1 9.3-26.6 22.8-30.7l320-96c9.7-2.9 20.2-1.1 28.3 5z"/></svg>
+                            SONG
+                        </a>
+                        <a href="{{ url_for('main.category', category_name=category.name, asset_type='album') }}" id="album" class="piece">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><style>svg{fill:#ffffff}</style><path d="M0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm256 32a32 32 0 1 1 0-64 32 32 0 1 1 0 64zm-96-32a96 96 0 1 0 192 0 96 96 0 1 0 -192 0zM96 240c0-35 17.5-71.1 45.2-98.8S205 96 240 96c8.8 0 16-7.2 16-16s-7.2-16-16-16c-45.4 0-89.2 22.3-121.5 54.5S64 194.6 64 240c0 8.8 7.2 16 16 16s16-7.2 16-16z"/></svg>
+                            ALBUM
+                        </a>
+                        <a href="{{ url_for('main.category', category_name=category.name, asset_type='catalogue') }}" id="catalogue" class="piece">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><style>svg{fill:#ffffff}</style><path d="M264.5 5.2c14.9-6.9 32.1-6.9 47 0l218.6 101c8.5 3.9 13.9 12.4 13.9 21.8s-5.4 17.9-13.9 21.8l-218.6 101c-14.9 6.9-32.1 6.9-47 0L45.9 149.8C37.4 145.8 32 137.3 32 128s5.4-17.9 13.9-21.8L264.5 5.2zM476.9 209.6l53.2 24.6c8.5 3.9 13.9 12.4 13.9 21.8s-5.4 17.9-13.9 21.8l-218.6 101c-14.9 6.9-32.1 6.9-47 0L45.9 277.8C37.4 273.8 32 265.3 32 256s5.4-17.9 13.9-21.8l53.2-24.6 152 70.2c23.4 10.8 50.4 10.8 73.8 0l152-70.2zm-152 198.2l152-70.2 53.2 24.6c8.5 3.9 13.9 12.4 13.9 21.8s-5.4 17.9-13.9 21.8l-218.6 101c-14.9 6.9-32.1 6.9-47 0L45.9 405.8C37.4 401.8 32 393.3 32 384s5.4-17.9 13.9-21.8l53.2-24.6 152 70.2c23.4 10.8 50.4 10.8 73.8 0z"/></svg>
+                            CATALOGUE
+                        </a> 
+                    </div>
+                    <txt class="title">Category: {{ category.name }}</txt>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+{% else %}
+    <div class="left-block">
+        <div class="row">
+            <a href="/discover"><h2 style="margin-left: 2rem;">NOT AVAILABLE. DISCOVER MORE.</h2></a>
+            <div class="dropdown">
+                <button class="dropbtn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM216 336h24V272H216c-13.3 0-24-10.7-24-24s10.7-24 24-24h48c13.3 0 24 10.7 24 24v88h8c13.3 0 24 10.7 24 24s-10.7 24-24 24H216c-13.3 0-24-10.7-24-24s10.7-24 24-24zm40-208a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"/></svg></button>
+                <div class="dropdown-content">
+                    Nothing added on watchlist yet!!
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endif %}
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+<script src="{{ url_for('static', filename='js/watchlist.js') }}"></script>
+
+{% endblock %}

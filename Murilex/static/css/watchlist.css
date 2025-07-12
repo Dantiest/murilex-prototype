@@ -1,0 +1,619 @@
+/* BUTTONS __________________________ BUTTONS */
+
+.category-button {
+    margin-top: 0.8rem;
+    cursor: pointer;
+    min-width: 4rem;
+    padding: 0.6rem;
+    border-radius: 25px;
+    color: white;
+    background-color: #7216f4;
+    border: 2px solid black;
+    margin-left: 0.5rem;
+    transition: 0.3s ease-in-out
+}
+
+.category-button:first-of-type {
+    width: 2rem !important;
+    margin-left: 0 !important;
+    background-color: rgb(45, 45, 45);
+}
+
+/* ALL */
+
+.all {
+    position: relative;
+    width: 100%;
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.division-all {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+
+/* CATEGORY-ROWS _________________________________ */
+
+.category-row {
+    width: 100%;
+    background-color: black;
+    height: 3rem;
+    color: var(--text-secondary);
+    border-radius: 25px;
+    align-items: center;
+    display: flex;
+    border: 3px solid #7216f4;
+    position: relative;
+    margin-top: 1.2rem;
+}
+
+
+
+/* CATEGORIES __________________________ CATEGORIES */
+
+.categories {
+    width: 100%;
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+.categories .box {
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 25vw;
+    height: 17vw;
+    margin-right: 1.5rem;
+    margin-top: 1.5rem;
+    overflow: hidden;
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 40px;
+    border: 5px solid #7216f4;
+    transition: transform 0.3s; /* Move the transition to the .box element */
+    position: relative; /* Add this line to make the .box a positioned ancestor */
+}
+
+.categories .box:hover {
+    transform: scale(1.1);
+}
+
+.categories .box:hover .type {
+    display: flex;
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0); /* Move it back to its original position */
+}
+
+/* Move the initial scale to the .categories .box */
+.categories .box::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: inherit;
+    background-size: cover;
+    transform-origin: center;
+    transition: transform 0.2s ease-in-out;
+    transform: scale(1);
+    z-index: -2; /* Adjust the z-index to place it behind both the .box content and .box element */
+}
+
+/* Update the hover and focus selectors */
+.categories .box:hover::after, .categories .box:focus::after {
+    transform: scale(0.9);
+}
+
+.box .type {
+    visibility: hidden;
+    opacity: 0;
+    white-space: nowrap;
+    z-index: 1;
+    height: 3rem;
+    position: absolute;
+    top: 0;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    transform: translateY(-10px); /* Initial transform to hide it */
+}
+
+
+.type .piece {
+    padding: 1vw;
+    cursor: pointer;
+    background-color: black;
+    color: white;
+    margin-right: 1vw;
+    font-size: 1vw;
+    transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
+    border-radius: 25px;
+    text-align: center;
+    min-width: 5vw;
+    margin-top: 1vw;
+    opacity: 0; /* Initially hidden */
+    transform: translateY(-10px); /* Initial transform to hide it */
+}
+
+.categories .box:hover .piece {
+    opacity: 1;
+    transform: translateY(0); /* Move it back to its original position */
+}
+
+.type .piece svg {
+    margin-right: 0.5vw;
+    height: 1vw;
+}
+
+
+.box .title {
+    color: white;
+    font-family: 'Lato', sans-serif;
+    font-size: 2.5vw;
+    padding-bottom: 8px;
+    text-decoration: none;
+    position: absolute;
+    bottom: 0.5vw;
+}
+
+
+/* CATALOGUES_ALL    ____________________________   CATALOGUES_ALL */
+
+.catalogue {
+    width: 49%;
+    height: 27.5vw;
+    background-color: black;
+    display: flex;
+    align-items: center;
+    position: relative;
+    border-radius: 25px;
+    margin-top: 2rem;
+    justify-content: center;
+    transition: 1s ease-in;
+}
+
+
+.catalogue .catalogue-image {
+    position: absolute;
+    width: 15vw;
+    height: 15vw;
+    left: 5vw;
+    top: 4.5vw;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+
+.container {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    top: 3.8vw;
+    right: 2vw;
+    width: 17vw;
+    min-height: 10vw;
+    max-height: 18vw
+}
+
+.stats {
+    width: 100%;
+    min-height: 1.5vw;
+    color: white;
+    font-size: 1.3vw;
+    margin-top: 0.75vw;
+    display: flex;
+    align-items: center;
+}
+
+.graph img {
+    object-fit: cover;
+    border: 2px white solid;
+    width: 17vw;
+    height: 8vw;
+}
+
+.catalogue-change {
+    position: absolute;
+    font-size: 2vw;
+    font-weight: 1000;
+    color: white;
+    top: 3%;
+    right: 2rem;
+}
+
+
+.buy {
+    position: absolute;
+    text-align: center;
+    width: 85%;
+    bottom: 0;
+    margin: 1rem;
+    padding: 1.5vw;
+    height: 1vw;
+    border: 3px solid rgb(19, 172, 19);
+    color: rgb(31, 182, 31);
+    border-radius: 25px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.buy:hover {
+    filter: grayscale(0%) opacity(1);
+    background: rgb(0, 83, 13);
+    color: white;
+    border-color: white;
+    transition: var(--transition-speed);
+}
+
+
+/* ALBUMS_ALL       ____________________________        SONGS_ALL */
+
+.cover {
+    width: 28%;
+    height: 43vw;
+    background-color: black;
+    margin-top: 1rem;
+    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    align-items: center;
+    transition: 1s ease-in;
+}
+
+.remove {
+    padding: 0.5vw;
+    color: white;
+    background-color: black;
+    display: block;
+    margin: 1vw;
+    width: 5vw;
+    text-align: center;
+    font-weight: 800;
+    font-size: 1vw;
+    transition: 0.2s ease-in-out;
+    border: 2px solid #7216f4;
+    border-radius: 20px;
+    z-index: 1;
+    position: absolute;
+    left: 0;
+    top: 0;
+    cursor: pointer;
+}
+
+.cover-image {
+    width: 88%;
+    height: 20vw;
+    margin-top: 4.5vw;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+.cover .title {
+    color: white;
+    width: 95%;
+    color: white;
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin-top: 0.9vw;
+}
+
+.cover .title txt {
+    margin-left: 1vw;
+    font-size: 1.7vw;
+    font-weight: 800;
+    max-width: 80%;
+}
+
+.cover .stats {
+    width: 90% !important;
+    margin-top: 1vw !important;
+}
+
+.stats .author-image {
+    height: 2.4vw;
+    width: 2.4vw;
+    border: 1px solid white;
+}
+
+.cover .stats txt {
+    font-size: 1.2vw !important;
+    margin-left: 0.5vw;
+}
+
+.cover .graph {
+    position: absolute;
+    right: 2vw;
+    bottom: 5vw;
+}
+
+.cover .graph img {
+    width: 12vw !important;
+    height: 6vw !important;
+
+}
+
+.cover .buy {
+    padding: 1vw !important;
+}
+
+.hidden-song {
+    width: 28%;
+    opacity: 0;
+}
+
+
+/*    TABLES _____________________________________________________________________________     TABLES   */
+
+
+
+/* SONGS_ALBUMS_TABLE   _________________________   SONGS_ALBUMS_TABLE */
+
+.category-table {
+    width: 100%;
+    height: auto;
+    margin-top: 0.5rem;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    display: none;
+}
+
+.title-row {
+    background-color: black;
+    color: white;
+    font-family: 'Lato', sans-serif;
+    width: 100%;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.title-row .name {
+    position: relative;
+    margin-left: 4.5%;
+}
+
+.title-row .title-author {
+    position: absolute;
+    margin-left: 27.5%;
+}
+
+.title-row .title-price {
+    position: absolute;
+    margin-left: 49%;
+}
+
+.title-row .title-available {
+    position: absolute;
+    margin-left: 75%;
+}
+
+.title-row .title-add {
+    position: absolute;
+    right: 0.7%;
+}
+
+
+/*  CATALOGUES_TABLE    ________________     CATALOGUES_TABLE  */
+
+/*ROWS ________________ ROWS */
+
+.category-table .row {
+    width: 100%;
+    display: flex;
+    height: 3rem;
+    align-items: center;
+    border-bottom: 3px solid #7216f4;  
+}
+
+
+.row .image-song{
+    height: 80%;
+    position: relative;
+    margin-left: 2%;
+    cursor: pointer;
+}
+
+.row .name{
+    position: relative;
+    margin-left: 8.5px;
+    cursor: pointer;
+}
+
+.row .author {
+    position: absolute;
+    margin-left: 27.5%;
+    height: calc(3rem *0.8);
+    width: 20%;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.author .author-image{
+    height: 100%;
+    position: relative;
+}
+
+.author .author-name{
+    position: relative;
+    margin-left: 10%;
+    cursor: pointer;
+}
+
+
+.row .price {
+    position: absolute;
+    margin-left: 49%;
+}
+
+.row .graph{
+    height: 3rem;
+    margin-left: 56%;
+    position: absolute;
+}
+
+.row .available{
+    position: absolute;
+    margin-left: 75%;
+}
+
+.category-table {
+    display: none;
+}
+
+/* ROWS ________________ ROWS */
+
+.category-table .row {
+    width: 100%;
+    display: flex;
+    height: 3rem;
+    align-items: center;
+    border-bottom: 3px solid #7216f4;  
+    transition: 1s ease-in;
+}
+
+
+.row .numb {
+    margin-left: 1.5rem;
+}
+
+.row .title {
+    position: absolute;
+    margin-left: 5%;
+    height: calc(3rem *0.8);
+    max-width: 20%;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.title .image-song{
+    height: 100%;
+    position: relative;
+}
+
+.title .song-name{
+    position: relative;
+    margin-left: 10%;
+    cursor: pointer;
+    height: 1rem;
+    white-space: nowrap;
+}
+
+.row .author {
+    position: absolute;
+    margin-left: 27.5%;
+    height: calc(3rem *0.8);
+    max-width: 20%;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.author .author-image{
+    height: 100%;
+    position: relative;
+}
+
+.author .author-name{
+    position: relative;
+    margin-left: 10%;
+    cursor: pointer;
+    height: 1rem;
+    white-space: nowrap;
+}
+
+
+.row .price {
+    position: absolute;
+    margin-left: 49%;
+}
+
+.row .graph{
+    height: 3rem;
+    margin-left: 56%;
+    position: absolute;
+}
+
+.row .available{
+    position: absolute;
+    margin-left: 75%;
+}
+
+.row .rmv {
+    position: absolute;
+    right: 3%;
+    cursor: pointer;
+}
+
+/* HIDDEN */
+
+.hidden {
+    z-index: 1;
+    visibility: hidden;
+    position: absolute;
+    right: -500px;
+    opacity: 0;
+}
+
+/* GRAPH ___________________________ GRAPH */
+
+/* Style the x-axis and y-axis ticks and labels */
+.x-axis path,
+.x-axis line,
+.y-axis path,
+.y-axis line {
+    fill: none;
+    shape-rendering: crispEdges;
+}
+
+.x-axis text {
+    font-size: 12px;
+    text-anchor: middle;
+}
+
+.y-axis text {
+    font-size: 12px;
+}
+
+/* Style chart title and labels if you have them */
+.chart-title {
+    font-size: 18px;
+    font-weight: bold;
+    text-anchor: middle;
+}
+
+.axis-label {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+path.line {
+    fill: none;
+    stroke: #7216f4;
+    stroke-width: 3.5;
+}

@@ -1,0 +1,754 @@
+/*   LEFT BLOCK   */
+
+.left-block {
+    display: flex;
+    flex-direction: column;
+    width: 28%;
+    margin-left: 2%;
+    margin-top: 0.5rem;
+    background-color: black;
+    position: absolute;
+    left: 1%;
+    top: 6rem;
+}
+
+.square-container {
+    position: relative;
+    width: 100%;
+}
+
+.square-container::before {
+    content: "";
+    display: block;
+    padding-top: 100%; /* Creates a square space based on width */
+}
+
+.block-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 93.5%;
+    height: 100%;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    margin-top: calc(6.5%/2);
+    margin-left: calc(6.5%/2);
+}
+
+
+.block-button {
+    z-index: 1;
+    background-color: #7216f4;
+    height: 4.5rem;
+    width: 4.5rem;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50px;
+    right: calc(6.5%/2 + 2%);
+    cursor: pointer;
+    bottom: 0;
+}
+
+.block-button svg {
+    fill: white;
+    height: 2.25rem;
+    width: 2.25rem;
+    padding-left: 6px;
+}
+
+.block-info {
+    width: 100%;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.add {
+    cursor: pointer;
+}
+
+.rmv {
+    cursor: pointer;
+}
+
+.add_secondary {
+    cursor: pointer;
+    display: none;
+}
+
+.rmv_secondary {
+    display: none;
+    cursor: pointer;
+}
+
+.block-info .bold {
+    width: 100%;
+    display: flex;
+    color: white;
+    align-items: center;
+    height: 2rem;
+    margin-top: 1.5rem;
+    padding-left: 1rem;
+}
+
+
+.block-info .bold txt {
+    margin-left: 15px;
+    font-size: 1.3rem;
+    color: grey;
+
+}
+
+.bold .buy-sell {
+    margin-left: 1vw;
+    padding-left: 0.8vw;
+    padding-right: 0.8vw;
+    padding-top: 0.3vw;
+    padding-bottom: 0.3vw;
+    border: 2px solid white;
+    text-align: center;
+    border-radius: 20px;
+    display: flex;
+    cursor: pointer;
+}
+
+.buy-sell:first-of-type {
+    background-color: #7216f4;
+}
+
+.bold .switch {
+    fill: white;
+    margin-left: 0.5vw;
+    height: 1vw;
+    cursor: pointer;
+}
+
+.artist-image {
+    width: 3vw;
+    height: 3vw;
+    border: 1px solid white;
+    background-position: center center; 
+    background-repeat: no-repeat; 
+    background-size: cover;
+}
+
+/* ORDER */
+
+.block-info .order {
+    display: flex;
+    width: 95%;
+    min-height: 5vw;
+    margin-top: 1vw;
+    border: 2px solid white;
+    flex-wrap: wrap;
+    margin-left: 2%;
+}
+
+.order .order-type {
+    width: 100%;
+    color: white;
+    padding-left: 2vw;
+    margin-top: 1vw;
+    position: relative;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    justify-content: space-between;
+}
+
+.order-type .info svg {
+    fill: white;
+    height: 1vw;
+    margin-left: 0.5vw;
+    margin-right: 7.5vw;
+}
+
+.dropbtn {
+    color: black;
+    font-size: 0.75vw;
+    font-weight: 700;
+    border: 3px solid #7216f4;
+    border-radius: 10px;
+    cursor: pointer;
+    height: 1.5vw;
+    width: 8vw;
+    text-align: center;
+    white-space: nowrap;
+  }
+  
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    cursor: pointer;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: grey;
+}
+
+.order .shares {
+    width: 100%;
+    color: white;
+    position: relative;
+    display: flex;
+    padding-left: 2vw;
+    margin-top: 0.5vw;
+}
+
+.total-shares {
+    width: 7vw;
+    position: absolute;
+    right: 1vw;
+}
+
+.order .total {
+    width: 100%;
+    color: white;
+    position: relative;
+    display: flex;
+    margin-top: 0.5vw;
+    padding-left: 2vw;
+}
+
+.total-amount {
+    position: absolute;
+    right: 1vw;
+}
+
+.order .make-order {
+    width: 100%;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 1vw;
+}
+
+.order .make-order a {
+    border: 2px solid white;
+    padding: 0.7vw;
+    border-radius: 10px;
+    margin-top: 0.5vw;
+    transition: 0.15s ease-in-out;
+    cursor: pointer;
+}
+
+.order .make-order a:hover {
+    background: #7216f4;
+    border-color: #7216f4;
+    font-weight: 800;
+}
+
+/* DESCRIPTION */
+
+.block-info .description {
+    color: #FFFFFF;
+    width: 93%;
+    padding-left: 1rem;
+}
+
+.description txt {
+    margin-left: 0.5vw;
+}
+
+.block-info .socials{
+    color: white;
+    width: 100%;
+    display: flex;
+    height: 5rem;
+    align-items: center;
+    margin-bottom: 1rem;
+    position: relative;
+    margin-top: 5px;
+    flex-wrap: wrap;
+}
+
+.socials .social{
+    width: 11rem;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+    margin-left: 1rem;
+}
+
+.social svg {
+    height: 2rem;
+}
+
+
+
+/*   RIGHT BLOCK _____________________________________ RIGHT BLOCK   */
+
+.right-block {
+    width: 63%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    background: black;
+    top: 1rem;
+    right: 3%;
+    color: white;
+    padding-bottom: 1.5vw;
+    position: relative;
+    margin-left: 37.5%;
+}
+
+.graph-data {
+    width: 97%;
+    height: 25vw;
+    margin-top: 2rem;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.graph-data .graph {
+    height: 22vw;
+    width: 33vw;
+    left: -2vw;
+    position: relative;
+}
+
+.graph-data .time {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    color: white;
+    font-size: 1vw;
+    white-space: nowrap;
+    left: 0;
+    top: 0;
+}
+
+.time .scale {
+    padding-right: 0.5vw;
+    border-left: 2px solid grey;
+    padding-left: 0.5vw;
+    cursor: pointer;
+}
+
+.time .scale:first-of-type {
+    border-left: none !important;
+}
+
+.graph-data .stats {
+    height: 99%;
+    flex-grow: 1;
+    position: relative;
+}
+
+.stats .row {
+    width: 100%;
+    white-space: nowrap;
+    color: white;
+    margin-top: 0.5vw;
+    padding-left: 0.5vw;
+}
+
+.row:last-of-type {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    bottom: 1vw;
+    position: absolute;
+    padding-left: 0 !important;
+    height: 2vw;
+}
+
+.row .document {
+    padding: 0.5vw;
+    border: 2px solid white;
+    border-radius: 15px;
+    transition: 0.2s ease-in-out;
+    font-size: 1vw;
+    cursor: pointer;
+}
+
+.document:hover {
+    background-color: #7216f4;
+    font-weight: 600;
+    padding: 1vw;
+}
+
+/* CONTAINER */
+
+.right-block .container {
+    width: 98%;
+    display: flex;
+}
+
+.container .box {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding-bottom: 1.5vw;
+    border-bottom: 2px solid grey;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.box .stat {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.box .stat:last-child {
+    margin-top: 0.25vw;
+    font-weight: 300;
+}
+
+/* ORDER BOOK AND TRADE HISTORY */
+
+/* BUTTONS */
+
+.order-button {
+    margin-right: 1vw;
+    cursor: pointer;
+    border-bottom: 2px solid #7216f4;
+}
+.trade-button {
+    margin-left: 1vw;
+    cursor: pointer;
+}
+
+
+/* Order Book */
+
+.container:last-of-type {
+    display: flex;
+    align-items: center;
+    width: 70% !important;
+    min-height: 1vw;
+    justify-content: space-between;
+    border: 1px solid white;
+    border-radius: 15px;
+    flex-wrap: nowrap;
+    padding: 1vw;
+    flex-wrap: wrap;
+}
+
+.bid-tabe {
+    width: 20vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    border: 2px solid red;
+    position: relative;
+}
+
+.ask-tabe {
+    width: 20vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.order-book {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    min-height: 1vw;
+    flex-direction: column;
+    padding-left: 0.5vw;
+    padding-right: 0.5vw;
+    border: 3px solid white
+}
+
+.division {
+    display: flex;
+    width: 100%;
+    position: relative;
+    justify-content: space-between;
+    margin-top: 0.25vw;
+}
+
+.title-division {
+    display: flex;
+    width: 100%;
+    position: relative;
+    justify-content: space-between;
+    font-size: 1.25vw;
+    font-weight: 700;
+}
+
+/* Trade History */
+
+.title-division.trade-history {
+    display: none;
+}
+
+.stats.trade-history {
+    width: 100%;
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 0.5vw;
+    flex-wrap: wrap;
+}
+
+
+/* REVIEW ORDER ________________________________ REVIEW ORDER */
+
+.display {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgb(20, 20, 20);
+    opacity: 0.9;
+    z-index: 1;
+    display: none;
+}
+
+.order-review {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 20%;
+    width: 20%;
+    border: 2px solid white;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 2;
+    opacity: 1;
+    justify-content: center;
+    align-items: center;
+    display: none;
+    flex-direction: column;
+    padding: 1rem;
+    color: white;
+}
+
+.close {
+    position: absolute;
+    right: 0.5rem;
+    top: 0.5rem;
+    cursor: pointer;
+}
+
+.order-row:first-of-type {
+    margin-top: 0 !important;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.buy-sell-review {
+    margin-left: 1vw;
+    padding-left: 0.8vw;
+    padding-right: 0.8vw;
+    padding-top: 0.3vw;
+    padding-bottom: 0.3vw;
+    border: 2px solid white;
+    text-align: center;
+    border-radius: 20px;
+    display: flex;
+}
+
+#selling {
+    display: none;
+}
+
+#limit-price-order {
+    display: none;
+}
+
+.order-row {
+    width: 100%;
+    color: white;
+    margin-top: 1rem;
+    justify-content: space-between;
+    position: relative;
+    display: flex;
+}
+
+.confirm {
+    text-align: center;
+    padding: 0.5rem;
+    margin-top: 1rem;
+    border: 2px solid white;
+    border-radius: 25px;
+    color: white;
+    width: 50%;
+    cursor: pointer;
+    margin-bottom: 1rem;
+}
+
+#limit-price {
+    display: none;
+}
+
+#best-price-order {
+    display: flex;
+}
+
+span {
+    color: white
+}
+
+/* VISUAL */
+
+.visual {
+    position: fixed;
+    bottom: 5px;
+    border: 3px solid #7216f4;
+    left: 45%;
+    height: 3rem;
+    width: 15vw;
+    font-family: 'Lato', sans-serif;
+    color: white;
+    background-color: black;
+    border-radius: 30px;
+    transition: opacity 0.5s, transform 0.5s;
+    opacity: 0;
+    transform: translateY(100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.visual.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.update {
+    position: relative;
+    padding-right: 5px;
+    display: flex;
+}
+
+#shares-owned {
+    display: none;
+}
+
+#chart-container {
+    margin: 20px;
+}
+
+/* Style the bars in the chart */
+.bar {
+    fill: steelblue; /* Change the color of the bars */
+}
+
+/* Style the x-axis and y-axis ticks and labels */
+.x-axis path,
+.x-axis line,
+.y-axis path,
+.y-axis line {
+    fill: none;
+    shape-rendering: crispEdges;
+}
+
+.x-axis text {
+    font-size: 12px;
+    text-anchor: middle;
+}
+
+.y-axis text {
+    font-size: 12px;
+}
+
+/* Style chart title and labels if you have them */
+.chart-title {
+    font-size: 18px;
+    font-weight: bold;
+    text-anchor: middle;
+}
+
+.axis-label {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+path.line {
+    fill: none;
+    stroke: #7216f4; /* Yellow color */
+    stroke-width: 3.5;
+}
+
+/* Style for scatter dots */
+circle {
+    fill: #0000FF; /* Blue color */
+}
+  
+/* Tooltip Styles */
+.tooltip {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.8); /* Tooltip background color */
+    color: #fff; /* Tooltip text color */
+    padding: 5px 10px; /* Padding inside the tooltip */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 12px; /* Font size */
+    pointer-events: none; /* Ensure the tooltip doesn't interfere with mouse events */
+    z-index: 2;
+}
+
+/* Highlight Circle Styles */
+.highlight-circle {
+    fill: white !important; /* Circle fill color */
+    stroke: #fff; /* Circle border color */
+    stroke-width: 2; /* Border thickness */
+    pointer-events: none; /* Ensure the circle doesn't interfere with mouse events */
+}
+
+.datetime-text {
+    display: none;
+}
+
+#Xtooltip {
+    display: none;
+    position: absolute;
+}
+#Ytooltip {
+    display: none;
+    position: absolute;
+}
+
+.message {
+    top: -300px;
+    left: 49%;
+    transition: 0.3s ease;
+    padding: 1rem;
+    background-color: black;
+    color: white;
+    border: 2px solid #7216f4;
+    border-radius: 15px;
+    position: absolute;
+    z-index: 999;
+}
+
+.show {
+    transform: translateY(315px);
+}

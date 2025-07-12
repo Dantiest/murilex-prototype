@@ -1,0 +1,277 @@
+{% extends "layout.html" %}
+
+{% block title %}Murilex | Profile{% endblock %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css')}}" />
+
+<div class="all">
+    <div class="user">
+        {% if profile_image %}
+        <div class="user-image" style="background-image: url('{{ profile_image }}'); background-repeat: no-repeat; background-position: center center; background-size: cover;"></div>
+        {% else %}
+        <div class="user-image" style="background-image: url('{{ url_for('static', filename='image/Murexe_Logo_2.jpg') }}'); background-repeat: no-repeat; background-position: center center; background-size: cover;"></div>
+        {% endif %}
+        <div class="username">{{username}}</div>
+        {% if user_status == 'True' %}
+            <svg id="edit-profile" data-value="{{user_status}}" xmlns="http://www.w3.org/2000/svg" height="2vw" viewBox="0 0 512 512"><path d="M471.6 21.7c-21.9-21.9-57.3-21.9-79.2 0L362.3 51.7l97.9 97.9 30.1-30.1c21.9-21.9 21.9-57.3 0-79.2L471.6 21.7zm-299.2 220c-6.1 6.1-10.8 13.6-13.5 21.9l-29.6 88.8c-2.9 8.6-.6 18.1 5.8 24.6s15.9 8.7 24.6 5.8l88.8-29.6c8.2-2.7 15.7-7.4 21.9-13.5L437.7 172.3 339.7 74.3 172.4 241.7zM96 64C43 64 0 107 0 160V416c0 53 43 96 96 96H352c53 0 96-43 96-96V320c0-17.7-14.3-32-32-32s-32 14.3-32 32v96c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32h96c17.7 0 32-14.3 32-32s-14.3-32-32-32H96z"/></svg>
+        {% else %}
+            <div id="edit-profile" data-value="{{user_status}}"></div>
+        {% endif %}
+        <div class="details">
+            <div class="row">
+                <h2 style="margin: 0.2rem 0.2rem 0.2rem 0;">Key Facts</h2>
+            </div>
+            <div class="row">
+                <txt>Available Balance:</txt>
+                <txt id="available-balance">{{available_balance}}</txt>
+            </div>
+            <div class="row">
+                <txt>Balance:</txt>
+                <txt id="balance">{{balance}}</txt>
+            </div>
+            <div class="row">
+                <txt>Most Traded:</txt>
+                <txt>{{most_traded}}</txt>
+            </div>
+            <div class="row">
+                <txt>Return 1 Year:</txt>
+                <txt id="return"></txt>
+            </div>
+        </div>
+        <div class="switch">
+            <div id="stats-button" class="switch-button">
+                Stats
+            </div>
+            <div id="portfolio-button" class="switch-button">
+                Portfolio
+            </div>
+            <div id="leaderboard-button" class="switch-button">
+                Leaderboard
+            </div>
+            <div id="transactions-button" class="switch-button">
+                Transactions
+            </div>
+        </div>
+    </div>
+
+    {% if catalogs or albums or songs %}
+        <div class="category-table" id="table-all">
+            <div class="title-row">
+                <txt class="name"> Title </txt>
+                <txt class="title-author"> Type </txt>
+                <txt class="title-price"> Price </txt>
+                <txt class="title-available"> Quantity </txt>
+                <!-- <txt class="title-add" style="padding-right: 2rem;"> Sell </txt> -->
+            </div>
+        {% if catalogs %}
+            {% for catalog in catalogs %}
+            <div data-value="{{ loop.index }}" class="row">
+                <a class="title" href="{{ url_for('details.asset', asset_name=catalog.author_name, type='catalogue')}}">
+                    <img class="image-song" src="{{ catalog.author_image }}">
+                    <div class="song-name">{{ catalog.author_name }}</div>
+                </a>
+
+                <div class="author">
+                    <div class="type-svg">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M264.5 5.2c14.9-6.9 32.1-6.9 47 0l218.6 101c8.5 3.9 13.9 12.4 13.9 21.8s-5.4 17.9-13.9 21.8l-218.6 101c-14.9 6.9-32.1 6.9-47 0L45.9 149.8C37.4 145.8 32 137.3 32 128s5.4-17.9 13.9-21.8L264.5 5.2zM476.9 209.6l53.2 24.6c8.5 3.9 13.9 12.4 13.9 21.8s-5.4 17.9-13.9 21.8l-218.6 101c-14.9 6.9-32.1 6.9-47 0L45.9 277.8C37.4 273.8 32 265.3 32 256s5.4-17.9 13.9-21.8l53.2-24.6 152 70.2c23.4 10.8 50.4 10.8 73.8 0l152-70.2zm-152 198.2l152-70.2 53.2 24.6c8.5 3.9 13.9 12.4 13.9 21.8s-5.4 17.9-13.9 21.8l-218.6 101c-14.9 6.9-32.1 6.9-47 0L45.9 405.8C37.4 401.8 32 393.3 32 384s5.4-17.9 13.9-21.8l53.2-24.6 152 70.2c23.4 10.8 50.4 10.8 73.8 0z"/></svg>
+                    </div>
+                    <txt style="margin-left: 0.5rem" class="author-name">Catalogue</txt>
+                </div>
+        
+                <txt data-asset-id="{{ catalog.id }}" data-asset-type="catalogue" class="price"><txt class="price-value">{{ catalog.price }} $</txt> <txt class="price-change" style="margin-left: 0.5vw;"> {{ catalog.price_change }} % </txt></txt>
+                <txt class="available">{{ catalog.quantity }}</txt>
+            </div>
+            {% endfor %}
+        {% endif %}
+        {% if albums %}
+            {% for album in albums %}
+            <div data-value="{{ loop.index }}" class="row">        
+                <a class="title" href="{{ url_for('details.asset', asset_name=album.name, type='album')}}">
+                    <img class="image-song" src="{{ album.image }}">
+                    <div class="song-name">{{ album.name }}</div>
+                </a>
+        
+                <a class="author">
+                    <div class="type-svg">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm256 32a32 32 0 1 1 0-64 32 32 0 1 1 0 64zm-96-32a96 96 0 1 0 192 0 96 96 0 1 0 -192 0zM96 240c0-35 17.5-71.1 45.2-98.8S205 96 240 96c8.8 0 16-7.2 16-16s-7.2-16-16-16c-45.4 0-89.2 22.3-121.5 54.5S64 194.6 64 240c0 8.8 7.2 16 16 16s16-7.2 16-16z"/></svg>
+                    </div>
+                    <txt style="margin-left: 0.5rem" class="author-name">Album</txt>
+                </a>
+                
+                <txt data-asset-id="{{ album.id }}" data-asset-type="album" class="price"><txt class="price-value">{{ album.price }} $</txt><txt class="price-change" style="margin-left: 0.5vw;"> {{ album.price_change }}% </txt></txt>
+                <txt class="available">{{ album.quantity }}</txt>
+            </div>
+            {% endfor %}
+        {% endif %}
+        {% if songs %}
+            {% for song in songs %}
+            <div data-value="{{ loop.index }}" class="row">        
+                <a class="title" href="{{ url_for('details.asset', asset_name=song.name, type='song')}}">
+                    <img class="image-song" src="{{ song.image }}">
+                    <div class="song-name">{{ song.name }}</div>
+                </a>
+        
+                <a class="author">
+                    <div class="type-svg">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M499.1 6.3c8.1 6 12.9 15.6 12.9 25.7v72V368c0 44.2-43 80-96 80s-96-35.8-96-80s43-80 96-80c11.2 0 22 1.6 32 4.6V147L192 223.8V432c0 44.2-43 80-96 80s-96-35.8-96-80s43-80 96-80c11.2 0 22 1.6 32 4.6V200 128c0-14.1 9.3-26.6 22.8-30.7l320-96c9.7-2.9 20.2-1.1 28.3 5z"/></svg>
+                    </div>
+                    <txt style="margin-left: 0.5rem" class="author-name">Song</txt>
+                </a>
+
+                <txt data-asset-id="{{ song.id }}" data-asset-type="song" class="price"><txt class="price-value">{{ song.price }}$</txt> <txt class="price-change" style="margin-left: 0.5vw;"> {{ song.price_change }} % </txt></txt>
+                <txt class="available">{{ song.quantity }}</txt>
+            </div>
+            {% endfor %}
+        {% endif %}
+        </div>
+    {%endif%}
+
+
+    <div class="category-table" id="leaderboard">
+        <div class="title-row">
+            <txt class="name"> Username </txt>
+            <!-- <txt class="title-author"> Type </txt> -->
+            <txt class="title-price"> Balance </txt>
+            <txt class="title-available"> Profit </txt>
+            <!-- <txt class="title-add" style="padding-right: 2rem;"> Visit </txt> -->
+        </div>
+    {% if users %}
+        {% for user in users %}
+            {% if user_id == user.id %}
+                <div style="background-color: grey;" data-value="{{ loop.index }}" class="row">
+                    <txt style="margin-left: 15px;">{{ loop.index }}</txt>
+                    <div class="title">
+                        {% if user.profile_image %}
+                        <img class="image-song" src="{{ user.profile_image }}">
+                        {% else %}
+                        <img class="image-song" src="{{ url_for('static', filename='image/Murexe_Logo_2.jpg') }}">
+                        {% endif %}
+                        <div class="song-name">{{user.username}}</div>
+                    </div>
+        
+                    <!-- <div class="author">
+                        <txt style="margin-left: 0.5rem" class="author-name">Catalogue</txt>
+                    </div> -->
+            
+                    <txt data-asset-id="" data-asset-type="catalogue" class="price"><txt class="price-value balance">{{user.balance}}</txt></txt>
+                    <txt class="available profit"></txt>
+                </div>
+            {% else %}
+                <div data-value="{{ loop.index }}" class="row">
+                    <txt style="margin-left: 15px">{{loop.index}}</txt>
+                    <a href="{{ url_for('main.profile', user_id=user.id)}}" class="title">
+                        {% if user.profile_image %}
+                        <img class="image-song" src="{{ user.profile_image }}">
+                        {% else %}
+                        <img class="image-song" src="{{ url_for('static', filename='image/Murexe_Logo_2.jpg') }}">
+                        {% endif %}
+                        <div class="song-name">{{user.username}}</div>
+                    </a>
+
+                    <!-- <div class="author">
+                        <txt style="margin-left: 0.5rem" class="author-name">Catalogue</txt>
+                    </div> -->
+            
+                    <txt data-asset-id="" data-asset-type="catalogue" class="price"><txt class="price-value balance">{{user.balance}}</txt></txt>
+                    <txt class="available profit"></txt>
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+    </div>
+
+    <div id="Xtooltip" class="tooltip">Date:<span id="Xvalue" style="font-weight: 600;">X</span></div>
+    <div id="Ytooltip" class="tooltip">Price:<span id="Yvalue" style="font-weight: 600;">Y</span>$</div>
+
+    <div id="graph" class="graph-container">
+        <h4>Balance evolution since 6 days ago</h4>
+        <div user-id="{{ user_id }}" class="graph" id="chart-container">
+
+        </div>
+    </div>
+
+    <div class="category-table" id="transaction-table">
+        <div class="title-row">
+            <txt class="name"> Asset </txt>
+            <txt class="title-author"> Type </txt>
+            <txt class="title-price"> Price </txt>
+            <txt class="title-available"> Quantity </txt>
+            <txt class="title-add" style="padding-right: 2rem;"> Date </txt>
+        </div>
+        {% for transaction in transactions %}
+            <div data-value="{{ loop.index }}" class="row">
+                <a class="title" href="{{ url_for('details.asset', asset_name=transaction.asset_name, type=transaction.asset_type)}}">
+                    <img class="image-song" src="{{ transaction.image }}">
+                    <div class="song-name">{{ transaction.asset_name }}</div>
+                </a>
+
+                {% if transaction.type == 'purchase' %}
+                <div class="author">
+                    <div class="type-svg">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"/></svg>
+                    </div>
+                    <txt style="margin-left: 0.5rem" class="author-name">Buy</txt>
+                </div>
+                {% elif transaction.type == 'sale' %}
+                <a class="author">
+                    <div class="type-svg">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M547.6 103.8L490.3 13.1C485.2 5 476.1 0 466.4 0H109.6C99.9 0 90.8 5 85.7 13.1L28.3 103.8c-29.6 46.8-3.4 111.9 51.9 119.4c4 .5 8.1 .8 12.1 .8c26.1 0 49.3-11.4 65.2-29c15.9 17.6 39.1 29 65.2 29c26.1 0 49.3-11.4 65.2-29c15.9 17.6 39.1 29 65.2 29c26.2 0 49.3-11.4 65.2-29c16 17.6 39.1 29 65.2 29c4.1 0 8.1-.3 12.1-.8c55.5-7.4 81.8-72.5 52.1-119.4zM499.7 254.9l-.1 0c-5.3 .7-10.7 1.1-16.2 1.1c-12.4 0-24.3-1.9-35.4-5.3V384H128V250.6c-11.2 3.5-23.2 5.4-35.6 5.4c-5.5 0-11-.4-16.3-1.1l-.1 0c-4.1-.6-8.1-1.3-12-2.3V384v64c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V384 252.6c-4 1-8 1.8-12.3 2.3z"/></svg>
+                    </div>
+                    <txt style="margin-left: 0.5rem" class="author-name">Sell</txt>
+                </a>
+                {% endif %}
+        
+                <txt class="price"><txt class="price-value">{{ transaction.price }} $</txt></txt>
+                <txt class="available">{{ transaction.quantity }}</txt>
+                <txt style="right: 5px; position: absolute">{{ transaction.balance }}</txt>
+            </div>
+        {% endfor %}
+
+</div>
+
+<div class="screen"></div>
+<div class="information">
+    <div class="title">
+        <h2>Edit Profile</h2>
+        <svg class="close" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg>
+    </div>
+    
+    <div class="detail">
+        <div>Profile Image:</div>
+        <div style="display: flex; padding-left: 10px" id="profileImage">
+            <div class="edit-text">{{profile_image}}</div>
+            <button class="edit-button" id="editProfileImage">Edit</button>
+            <input class="edit-input" type="text" id="newProfileImage" style="display: none;" placeholder="Enter new image URL">
+        </div>
+    </div>
+    
+    <div class="detail">
+        <div>Username:</div>
+        <div style="display: flex" id="username">
+            <div class="edit-text">{{username}}</div>
+            <button class="edit-button" id="editUsername">Edit</button>
+            <input class="edit-input" type="text" id="newUsername" style="display: none;" placeholder="Enter new username">
+        </div>
+    </div>
+    
+    <div class="detail">
+        <div>Email:</div>
+        <div style="display: flex" id="email">
+            <div class="edit-text">{{email}}</div>
+            <button class="edit-button" id="editEmail">Edit</button>
+            <input class="edit-input" type="email" id="newEmail" style="display: none;" placeholder="Enter new email">
+        </div>
+    </div>
+
+    <div id="save">
+        SAVE
+    </div>
+
+</div>
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="{{ url_for('static', filename='js/profile.js') }}"></script>
+
+{% endblock %}

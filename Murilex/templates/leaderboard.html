@@ -1,0 +1,64 @@
+{% extends "layout.html" %}
+
+{% block title %}Murilex | Leaderboard{% endblock %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/leaderboard.css')}}" />
+
+<div class="category-table" id="leaderboard">
+    <div class="title-row">
+        <txt class="name"> Username </txt>
+        <!-- <txt class="title-author"> Type </txt> -->
+        <txt class="title-price"> Balance </txt>
+        <txt class="title-available"> Profit </txt>
+        <!-- <txt class="title-add" style="padding-right: 2rem;"> Visit </txt> -->
+    </div>
+{% if users %}
+    {% for user in users %}
+        {% if user_id == user.id %}
+            <div style="background-color: grey;" data-value="{{ loop.index }}" class="row">
+                <txt style="margin-left: 15px;">{{ loop.index }}</txt>
+                <div class="title">
+                    {% if user.profile_image %}
+                    <img class="image-song" src="{{ user.profile_image }}">
+                    {% else %}
+                    <img class="image-song" src="{{ url_for('static', filename='image/Murexe_Logo_2.jpg') }}">
+                    {% endif %}
+                    <div class="song-name">{{user.username}}</div>
+                </div>
+    
+                <!-- <div class="author">
+                    <txt style="margin-left: 0.5rem" class="author-name">Catalogue</txt>
+                </div> -->
+        
+                <txt data-asset-id="" data-asset-type="catalogue" class="price"><txt class="price-value balance">{{user.balance}}</txt></txt>
+                <txt class="available profit"></txt>
+            </div>
+        {% else %}
+            <div data-value="{{ loop.index }}" class="row">
+                <txt style="margin-left: 15px">{{loop.index}}</txt>
+                <a href="{{ url_for('main.profile', user_id=user.id)}}" class="title">
+                    {% if user.profile_image %}
+                    <img class="image-song" src="{{ user.profile_image }}">
+                    {% else %}
+                    <img class="image-song" src="{{ url_for('static', filename='image/Murexe_Logo_2.jpg') }}">
+                    {% endif %}
+                    <div class="song-name">{{user.username}}</div>
+                </a>
+
+                <!-- <div class="author">
+                    <txt style="margin-left: 0.5rem" class="author-name">Catalogue</txt>
+                </div> -->
+        
+                <txt data-asset-id="" data-asset-type="catalogue" class="price"><txt class="price-value balance">{{user.balance}}</txt></txt>
+                <txt class="available profit"></txt>
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+</div>
+
+<script src="{{ url_for('static', filename='js/leaderboard.js') }}"></script>
+
+{% endblock %}

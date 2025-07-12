@@ -1,0 +1,364 @@
+{% extends "layout.html" %}
+
+{% block title %}Murilex | Portfolio{% endblock %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/portfolio.css')}}" />
+
+{% if catalogs or songs or albums or asks or bids %}
+
+    <button class="category-button category-button-all">ALL</button>
+    <button class="category-button category-button-catalogues">CATALOGUES</button>
+    <button class="category-button category-button-albums">ALBUMS</button>
+    <button class="category-button category-button-songs">SONGS</button>
+    <button class="category-button category-button-pending">PENDING</button>
+
+    <div class="all" data-value="{{ transaction }}">
+
+        <div id="pending">
+            {% if bids %}
+
+            <div class="category-row" id="bids-title">
+                <h2 style="margin-left: 2rem;">BIDS</h2>
+            </div>
+
+            <div class="category-table">
+                <div class="title-row">
+                    <txt class="name"> Title </txt>
+                    <txt class="title-author"> Type </txt>
+                    <txt class="title-price"> Price </txt>
+                    <txt class="title-available"> Quantity </txt>
+                </div>
+                {% for bid in bids %}
+                <div data-value="{{ loop.index }}" class="row">        
+                    <a class="title" href="{{ url_for('details.asset', asset_name=bid.asset_name, type=bid.asset_type)}}">
+                        <img class="image-song" src="{{ bid.asset_image }}">
+                        <div class="song-name">{{ bid.asset_name }}</div>
+                    </a>                
+            
+                    <txt class="price">{{ bid.price }}$</txt>
+                    <div data-item-id="{{ bid.asset_id }}" data-asset-type={{ bid.asset_type }} id="chart-container" class="graph">
+
+                        <!--<img src="{{ url_for('static', filename='image/murexe_out.jpg') }}"> -->
+                    </div>
+                    <txt class="available">{{ bid.quantity }}</txt>
+                    <a class="rmv bid" data-bid-id="{{bid.id}}" data-item-id="{{ bid.asset_id }}" data-asset-type="{{ bid.asset_type }}"><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zM175 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z"/></svg></a>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            {% if asks %}
+
+            <div class="category-row" id="asks-title">
+                <h2 style="margin-left: 2rem;">ASKS</h2>
+            </div>
+
+            <div class="category-table">
+                <div class="title-row">
+                    <txt class="name"> Title </txt>
+                    <txt class="title-author"> Type </txt>
+                    <txt class="title-price"> Price </txt>
+                    <txt class="title-available"> Quantity </txt>
+                    <txt class="title-add" style="padding-right: 2rem;"> Cancel </txt>
+                </div>
+                {% for ask in asks %}
+                <div data-value="{{ loop.index }}" class="row">        
+                    <a class="title" href="{{ url_for('details.asset', asset_name=ask.asset_name, type=ask.asset_type)}}">
+                        <img class="image-song" src="{{ ask.asset_image }}">
+                        <div class="song-name">{{ ask.asset_name }}</div>
+                    </a>
+                    
+            
+                    <txt class="price">{{ ask.price }}$</txt>
+                    <div data-item-id="{{ ask.asset_id }}" data-asset-type={{ ask.asset_type }} id="chart-container" class="graph">
+
+                        <!--<img src="{{ url_for('static', filename='image/murexe_out.jpg') }}"> -->
+                    </div>
+                    <txt class="available">{{ ask.quantity }}</txt>
+                    <a class="rmv ask" data-ask-id="{{ask.id}}" data-item-id="{{ ask.asset_id }}" data-asset-type="{{ ask.asset_type }}"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zM175 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z"/></svg></a>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+
+
+
+        {% if catalogs or albums or songs %}
+            <div class="category-table" id="table-all">
+                <div class="title-row">
+                    <txt class="name"> Title </txt>
+                    <txt class="title-author"> Type </txt>
+                    <txt class="title-price"> Price </txt>
+                    <txt class="title-available"> Quantity </txt>
+                    <!--<txt class="title-add" style="padding-right: 2rem;"> Sell </txt>-->
+                </div>
+            {% if catalogs %}
+                {% for catalog in catalogs %}
+                <div data-value="{{ loop.index }}" class="row">
+                    <a class="title" href="{{ url_for('details.asset', asset_name=catalog.author_name, type='catalogue')}}">
+                        <img class="image-song" src="{{ catalog.author_image }}">
+                        <div class="song-name">{{ catalog.author_name }}</div>
+                    </a>
+
+                    <div class="author">
+                        <div class="type-svg">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M264.5 5.2c14.9-6.9 32.1-6.9 47 0l218.6 101c8.5 3.9 13.9 12.4 13.9 21.8s-5.4 17.9-13.9 21.8l-218.6 101c-14.9 6.9-32.1 6.9-47 0L45.9 149.8C37.4 145.8 32 137.3 32 128s5.4-17.9 13.9-21.8L264.5 5.2zM476.9 209.6l53.2 24.6c8.5 3.9 13.9 12.4 13.9 21.8s-5.4 17.9-13.9 21.8l-218.6 101c-14.9 6.9-32.1 6.9-47 0L45.9 277.8C37.4 273.8 32 265.3 32 256s5.4-17.9 13.9-21.8l53.2-24.6 152 70.2c23.4 10.8 50.4 10.8 73.8 0l152-70.2zm-152 198.2l152-70.2 53.2 24.6c8.5 3.9 13.9 12.4 13.9 21.8s-5.4 17.9-13.9 21.8l-218.6 101c-14.9 6.9-32.1 6.9-47 0L45.9 405.8C37.4 401.8 32 393.3 32 384s5.4-17.9 13.9-21.8l53.2-24.6 152 70.2c23.4 10.8 50.4 10.8 73.8 0z"/></svg>
+                        </div>
+                        <txt style="margin-left: 0.5rem" class="author-name">Catalogue</txt>
+                    </div>
+            
+                    <txt data-asset-id="{{ catalog.id }}" data-asset-type="catalogue" class="price"><txt class="price-value">{{ catalog.price }} $</txt> <txt class="price-change" style="margin-left: 0.5vw;"> {{ catalog.price_change }} % </txt></txt>
+                    <div data-item-id="{{ catalog.id }}" data-asset-type="catalogue" id="chart-container" class="graph">
+
+                        <!--<img src="{{ url_for('static', filename='image/murexe_out.jpg') }}"> -->
+                    </div>
+                    <txt class="available">{{ catalog.quantity }}</txt>
+                </div>
+                {% endfor %}
+            {% endif %}
+            {% if albums %}
+                {% for album in albums %}
+                <div data-value="{{ loop.index }}" class="row">        
+                    <a class="title" href="{{ url_for('details.asset', asset_name=album.name, type='album')}}">
+                        <img class="image-song" src="{{ album.image }}">
+                        <div class="song-name">{{ album.name }}</div>
+                    </a>
+            
+                    <a class="author">
+                        <div class="type-svg">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm256 32a32 32 0 1 1 0-64 32 32 0 1 1 0 64zm-96-32a96 96 0 1 0 192 0 96 96 0 1 0 -192 0zM96 240c0-35 17.5-71.1 45.2-98.8S205 96 240 96c8.8 0 16-7.2 16-16s-7.2-16-16-16c-45.4 0-89.2 22.3-121.5 54.5S64 194.6 64 240c0 8.8 7.2 16 16 16s16-7.2 16-16z"/></svg>
+                        </div>
+                        <txt style="margin-left: 0.5rem" class="author-name">Album</txt>
+                    </a>
+                    
+                    <txt data-asset-id="{{ album.id }}" data-asset-type="album" class="price"><txt class="price-value">{{ album.price }} $</txt><txt class="price-change" style="margin-left: 0.5vw;"> {{ album.price_change }}% </txt></txt>
+                    <div data-item-id="{{ album.id }}" data-asset-type="album" id="chart-container" class="graph">
+
+                        <!--<img src="{{ url_for('static', filename='image/murexe_out.jpg') }}"> -->
+                    </div>
+                    <txt class="available">{{ album.quantity }}</txt>
+                </div>
+                {% endfor %}
+            {% endif %}
+            {% if songs %}
+                {% for song in songs %}
+                <div data-value="{{ loop.index }}" class="row">        
+                    <a class="title" href="{{ url_for('details.asset', asset_name=song.name, type='song')}}">
+                        <img class="image-song" src="{{ song.image }}">
+                        <div class="song-name">{{ song.name }}</div>
+                    </a>
+            
+                    <a class="author">
+                        <div class="type-svg">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M499.1 6.3c8.1 6 12.9 15.6 12.9 25.7v72V368c0 44.2-43 80-96 80s-96-35.8-96-80s43-80 96-80c11.2 0 22 1.6 32 4.6V147L192 223.8V432c0 44.2-43 80-96 80s-96-35.8-96-80s43-80 96-80c11.2 0 22 1.6 32 4.6V200 128c0-14.1 9.3-26.6 22.8-30.7l320-96c9.7-2.9 20.2-1.1 28.3 5z"/></svg>
+                        </div>
+                        <txt style="margin-left: 0.5rem" class="author-name">Song</txt>
+                    </a>
+
+                    <txt data-asset-id="{{ song.id }}" data-asset-type="song" class="price"><txt class="price-value">{{ song.price }}$</txt> <txt class="price-change" style="margin-left: 0.5vw;"> {{ song.price_change }} % </txt></txt>
+                    <div data-item-id="{{ song.id }}" data-asset-type="song" id="chart-container" class="graph">
+
+                        <!--<img src="{{ url_for('static', filename='image/murexe_out.jpg') }}"> -->
+                    </div>
+                    <txt class="available">{{ song.quantity }}</txt>
+                </div>
+                {% endfor %}
+            {% endif %}
+        {% else %}
+            <div class="category-table" id="table-all">
+            </div>
+        {% endif %}
+
+        </div>
+
+        <!-- TABLES ______________________________ TABLES -->
+        {% if catalogs %}
+
+        <div class="category-table" id="catalogues-table">
+            <div class="title-row">
+                <txt class="name"> Author </txt>
+                <txt class="title-author">  </txt>
+                <txt class="title-price"> Price </txt>
+                <txt class="title-available"> Quantity </txt>
+                <!--<txt class="title-add" style="padding-right: 2rem;"> Remove </txt>-->
+            </div>
+            {% for catalog in catalogs %}
+            <div data-value="{{ loop.index }}" class="row">
+                <a class="title" href="{{ url_for('details.artists', artist_id=catalog.artist_id)}}">
+                    <img class="image-song" src="{{ catalog.author_image }}">
+                    <div class="song-name">{{ catalog.author_name }}</div>
+                </a>
+        
+                <txt data-asset-id="{{ catalog.id }}" data-asset-type="catalogue" class="price"><txt class="price-value">{{ catalog.price }} $</txt> <txt class="price-change" style="margin-left: 0.5vw;"> {{ catalog.price_change }} % </txt></txt>
+                <div data-item-id="{{ catalog.id }}" data-asset-type="catalogue" id="chart-container" class="graph">
+
+                    <!--<img src="{{ url_for('static', filename='image/murexe_out.jpg') }}"> -->
+                </div>
+                <txt class="available">{{ catalog.quantity }}</txt>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="category-table" id="catalogues-table">
+            <div class="title-row">
+                <txt class="name"> No Catalogues Added </txt>
+           </div>
+        </div>
+        {% endif %}
+
+        {% if albums %}
+
+            <div class="category-table" id="albums-table">
+                <div class="title-row">
+                    <txt class="name"> Title </txt>
+                    <txt class="title-author"> Author </txt>
+                    <txt class="title-price"> Price </txt>
+                    <txt class="title-available"> Quantity </txt>
+                    <!--<txt class="title-add" style="padding-right: 2rem;"> Remove </txt>-->
+                </div>
+                {% for album in albums %}
+                    <div data-value="{{ loop.index }}" class="row">        
+                        <a class="title" href="{{ url_for('details.asset', asset_name=album.name, type='album')}}">
+                            <img class="image-song" src="{{ album.image }}">
+                            <div class="song-name">{{ album.name }}</div>
+                        </a>
+                
+                        <a class="author" href="{{ url_for('details.artists', artist_id=album.artist_id)}}">
+                            <img  class="author-image" src="{{ album.author_image }}">
+                            <txt class="author-name">{{ album.author_name }}</txt>
+                        </a>
+                        
+                
+                        <txt data-asset-id="{{ album.id }}" data-asset-type="album" class="price"><txt class="price-value">{{ album.price }} $</txt><txt class="price-change" style="margin-left: 0.5vw;"> {{ album.price_change }}% </txt></txt>
+                        <div data-item-id="{{ album.id }}" data-asset-type="album" id="chart-container" class="graph">
+
+                            <!--<img src="{{ url_for('static', filename='image/murexe_out.jpg') }}"> -->
+                        </div>
+                        <txt class="available">{{ album.quantity }}</txt>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="category-table" id="albums-table" >
+                <div class="title-row">
+                    <txt class="name"> No Albums Added </txt>
+            </div>
+        {% endif %}
+
+        {% if songs %}
+
+        <div class="category-table" id="songs-table">
+            <div class="title-row">
+                <txt class="name"> Title </txt>
+                <txt class="title-author"> Author </txt>
+                <txt class="title-price"> Price </txt>
+                <txt class="title-available"> Quantity </txt>
+                <!--<txt class="title-add" style="padding-right: 2rem;"> Remove </txt>-->
+            </div>
+            {% for song in songs %}
+            <div data-value="{{ loop.index }}" class="row">        
+                <a class="title" href="{{ url_for('details.asset', asset_name=song.name, type='song')}}">
+                    <img class="image-song" src="{{ song.image }}">
+                    <div class="song-name">{{ song.name }}</div>
+                </a>
+        
+                <a class="author" href="{{ url_for('details.artists', artist_id=song.artist_id)}}">
+                    <img  class="author-image" src="{{ song.author_image }}">
+                    <txt class="author-name">{{ song.author_name }}</txt>
+                </a>
+                
+        
+                <txt data-asset-id="{{ song.id }}" data-asset-type="song" class="price"><txt class="price-value">{{ song.price }}$</txt> <txt class="price-change" style="margin-left: 0.5vw;"> {{ song.price_change }} % </txt></txt>
+                <div data-item-id="{{ song.id }}" data-asset-type="song" id="chart-container" class="graph">
+
+                    <!--<img src="{{ url_for('static', filename='image/murexe_out.jpg') }}"> -->
+                </div>
+                <txt class="available">{{ song.quantity }}</txt>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="category-table" id="song-table" >
+            <div class="title-row">
+                <txt class="name"> No Songs Added </txt>
+           </div>
+        </div>
+        {% endif %}
+    </div>
+
+{% else %}
+    <div class="left-block">
+        <div class="row">
+            <a href="/discover"><h2 style="margin-left: 2rem;">NOT AVAILABLE. DISCOVER MORE.</h2></a>
+            <div class="dropdown">
+                <button class="dropbtn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM216 336h24V272H216c-13.3 0-24-10.7-24-24s10.7-24 24-24h48c13.3 0 24 10.7 24 24v88h8c13.3 0 24 10.7 24 24s-10.7 24-24 24H216c-13.3 0-24-10.7-24-24s10.7-24 24-24zm40-208a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"/></svg></button>
+                <div class="dropdown-content">
+                    Nothing added to portfolio yet!!
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endif %}
+
+<div class="bottom">
+    <div class="division">
+        <div class="top-stat">
+            <h2>{{balance}}</h2>
+        </div>
+        <div class="bottom-title">
+            <txt>Balance</txt>
+        </div>
+    </div>
+    <div class="division">
+        <div class="top-stat">
+            <h2>{{available_balance}}</h2>
+        </div>
+        <div class="bottom-title">
+            <txt>Available Balance</txt>
+        </div>
+    </div>
+    <!--<div class="division">
+        <div class="top-stat">
+            <!--<h2>{{total_allocated}}</h2>
+            <h2>Not available yet</h2>
+        </div>
+        <div class="bottom-title">
+            <txt>Total Allocated</txt>
+        </div>
+    </div>
+    <div class="division">
+        <div class="top-stat">
+            <!--<h2>{{pending_balance}}</h2>
+            <h2>Not available yet</h2>
+        </div>
+        <div class="bottom-title">
+            <txt>Pending</txt>
+        </div>
+    </div>
+    <div class="division">
+        <div class="top-stat">
+            <h2>Not available yet</h2>
+        </div>
+        <div class="bottom-title">
+            <txt>Profit</txt>
+        </div>
+    </div>
+    <div class="division">
+        <div class="top-stat">
+            <h2>Not available yet</h2>
+        </div>
+        <div class="bottom-title">
+            <txt>Total Equity</txt>
+        </div>
+    </div>-->
+</div>
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+<script src="{{ url_for('static', filename='js/portfolio.js') }}"></script>
+
+{% endblock %}

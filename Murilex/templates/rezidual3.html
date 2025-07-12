@@ -1,0 +1,198 @@
+@app.route('/asset/<asset_name>')
+    def asset(asset_name, catalogue_id):
+        connection = sqlite3.connect("murexe.db")
+        cursor = connection.cursor()
+    
+        # Named tuple structure for Album
+        Asset = namedtuple(
+            'Asset',
+            ['id', 'name', 'image', 'price', 'availability', 'author_name', 'author_image', 'category', 'asset_type']
+        )
+    
+        Catalogue = namedtuple(
+        'Catalogue',
+        ['id', 'image', 'price', 'shares', 'author_name', 'author_image', 'category', 'asset_type']
+        )
+    
+        # Fetch data from both tables and filter by the asset name
+        cursor.execute("""
+            SELECT song.id, song.name, song.image, song.price, song.availability, artist.name AS author_name, artist.image AS author_image, categories.name AS category_name
+            FROM song
+            INNER JOIN artist ON song.artist_id = artist.id
+            INNER JOIN categories ON song.category_id = categories.id
+            WHERE song.name = ?
+            UNION
+            SELECT album.id, album.name, album.image, album.price, album.availability, artist.name AS author_name, artist.image AS author_image, categories.name AS category_name
+            FROM album
+            INNER JOIN artist ON album.artist_id = artist.id
+            INNER JOIN categories ON album.category_id = categories.id
+            WHERE album.name = ? """, (asset_name, asset_name))
+        assetRaw = cursor.fetchone()
+        asset_tuple = Asset(*assetRaw)
+        asset_data = asset_tuple._asdict()
+    
+        # Fetch data from the album table if not found in the song table
+        if not assetRaw:
+            cursor.execute("""
+                SELECT price, shares, artist.name AS author_name, artist.image AS author_image
+                FROM catalogue
+                INNER JOIN artist ON catalogue.artist_id = artist.id
+                WHERE id = ?""", (catalogue_id,))
+            catalogueRaw = cursor.fetchone()
+            catalogue_tuple = Catalogue(*catalogueRaw)
+            catalogue_data = catalogue_tuple._asdict()
+    
+        return render_template('asset.html', asset=asset_data, catalogue=catalogue_data)
+
+
+@app.route('/<category_name>_songs')
+    def category_songs(category_name):
+        connection = sqlite3.connect("murexe.db")
+        cursor = connection.cursor()
+    
+        # Fetch the category information
+        cursor.execute("SELECT id, image FROM categories WHERE name = ?", (category_name,))
+        category_id, category_image = cursor.fetchone()
+        
+        # Define the namedtuple structure
+        Song = namedtuple('Song', ['name', 'image', 'author_name', 'author_image', 'price', 'availability'])
+    
+        # Fetch data from the database
+        cursor.execute("""
+            SELECT song.name, song.image, artist.name AS author_name, artist.image AS author_image, song.price, song.availability
+            FROM song
+            INNER JOIN artist ON song.artist_id = artist.id
+            WHERE song.category_id = ?
+            LIMIT 50
+        """, (category_id,))
+        songs = cursor.fetchall()
+        data = [Song(*row) for row in songs]
+        
+        connection.close()
+        
+        return render_template('category_songs.html', category_name=category_name, data=data, category_image=category_image)
+
+        # Deduct matched assets from the seller's portfolio
+        # seller_id = ask['user_id']
+        # asset_id = ask['asset_id']
+        # asset_type = ask['asset_type']
+        # print('seller quantity:', ask)
+        # deduct_from_portfolio(seller_id, asset_id, asset_type, transaction_quantity)
+
+        connection = sqlite3.connect("murexe.db")
+        cursor = connection.cursor()
+    
+        # Named tuple structure for Artist
+        Artist = namedtuple(
+            'Artist',
+            ['name', 'image', 'category', 'language', 'country', 'price']
+        )
+    
+        # Named tuple structure for Song
+        Song = namedtuple(
+            'Song',
+            ['id', 'name', 'image', 'albumname', 'price', 'availability', "price_change"]
+        )
+    
+        # Named tuple structure for Album
+        Album = namedtuple(
+            'Album',
+            ['id', 'name', 'image', 'price', 'availability', "price_change"]
+        )
+    
+        # Named tuple structure for Catalogue
+        Catalogue = namedtuple(
+            'Catalogue',
+            ['id', 'price', 'shares', "price_change"]
+        )
+    
+        artist_data = []
+        song_data = []
+        album_data = []
+        catalogue_data = []
+    
+        user_id = session.get('user_id')
+    
+        song_watchlist_count = {}  # Create a dictionary to store item_id and watchlist status
+        album_watchlist_count = {}
+        catalogue_watchlist_count = {}
+    
+        #cursor.execute("SELECT id FROM artist WHERE name = ?", (artist,))
+        #artist_id = cursor.fetchone()
+    
+    
+        if artist_id is not None:
+            cursor.execute("""SELECT
+                            name,
+                            image,
+                            category_id,
+                            language,
+                            country,
+                            price
+                        FROM artist
+                        WHERE id = ?""", (artist_id,))
+            artistRaw = cursor.fetchone()
+            artist_tuple = Artist(*artistRaw)
+            artist_data = artist_tuple._asdict()
+    
+            cursor.execute("""SELECT
+                            id AS song_id,
+                            name AS song_name,
+                            image AS song_image,
+                            albumname AS song_albumname,
+                            price AS song_price,
+                            availability AS song_availability
+                        FROM song
+                        WHERE artist_id = ?""", (artist_id,))
+            songsRaw = cursor.fetchall()
+            song_data.extend([Song(*song, price_change=0) for song in songsRaw])
+    
+            cursor.execute("""SELECT
+                            id AS album_id,
+                            name AS album_name,
+                            image AS album_image,
+                            price AS album_price,
+                            availability AS album_availability
+                        FROM album
+                        WHERE artist_id = ?""", (artist_id,))
+            albumsRaw = cursor.fetchall()
+            album_data.extend([Album(*album, price_change=0) for album in albumsRaw])
+    
+            cursor.execute("""SELECT
+                            id AS catalogue_id,
+                            price AS catalogue_price,
+                            shares AS catalogue_shares
+                        FROM catalogue
+                        WHERE artist_id = ?""", (artist_id,))
+            catalogueRaw = cursor.fetchone()
+            
+            catalogue_id = None
+    
+            if catalogueRaw is not None:  # Check if catalogueRaw is not None
+                catalogue_tuple = Catalogue(*catalogueRaw, price_change=0)
+                catalogue_data = catalogue_tuple._asdict()
+    
+                catalogue_id = catalogue_data['id']
+    
+            # Loop through the data to check if each item is in the watchlist
+            if song_data is not None:
+                for item in song_data:
+                    cursor.execute('SELECT COUNT(*) FROM watchlist WHERE user_id = ? AND item_id = ? AND item_type = ?',
+                                (user_id, item.id, "song"))
+                    count = cursor.fetchone()[0]
+                    song_watchlist_count[item.id] = count
+            if album_data is not None:
+                for item in album_data:
+                    cursor.execute('SELECT COUNT(*) FROM watchlist WHERE user_id = ? AND item_id = ? AND item_type = ?',
+                                (user_id, item.id, "album"))
+                    count = cursor.fetchone()[0]
+                    album_watchlist_count[item.id] = count
+            if catalogue_data is not None:
+                cursor.execute('SELECT COUNT(*) FROM watchlist WHERE user_id = ? AND item_id = ? AND item_type = ?',
+                            (user_id, catalogue_id, "catalogue"))
+                count = cursor.fetchone()[0]
+                catalogue_watchlist_count[catalogue_id] = count
+                        
+            connection.close()
+    
+        return render_template('artists.html', catalogue=catalogue_data, song_data=song_data, album_data=album_data, artist=artist_data, song_watchlist_count=song_watchlist_count, album_watchlist_count=album_watchlist_count, catalogue_watchlist_count=catalogue_watchlist_count)

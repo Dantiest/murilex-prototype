@@ -1,0 +1,91 @@
+@app.route('/<artist>')
+    def artists(artist):
+        connection = sqlite3.connect("murexe.db")
+        cursor = connection.cursor()
+    
+    
+        # Named tuple structure for Artist
+        Artist = namedtuple(
+            'Artist',
+            ['id', 'name', 'image', 'category', 'language', 'country', 'price', 'featured']
+        )
+    
+        # Named tuple structure for Song
+        Song = namedtuple(
+            'Song',
+            ['id', 'name', 'image', 'category', 'albumname', 'language', 'price', 'availability']
+        )
+    
+        # Named tuple structure for Album
+        Album = namedtuple(
+            'Album',
+            ['id', 'name', 'image', 'category', 'language', 'price', 'availability']
+        )
+    
+        # Named tuple structure for Catalogue
+        Catalogue = namedtuple(
+            'Catalogue',
+            ['id', 'artist_id', 'price', 'shares']
+        )
+    
+    
+        artist_data = []
+        song_data = []
+        album_data = []
+        catalogue_data = []
+    
+        cursor.execute("""SELECT
+                            artist.id AS artist_id,
+                            artist.name AS artist_name,
+                            artist.image AS artist_image,
+                            artist.category AS artist_category,
+                            artist.language AS artist_language,
+                            artist.country AS artist_country,
+                            artist.price AS artist_price,
+                            artist.featured AS artist_featured,
+                       
+                            song.id AS song_id,
+                            song.name AS song_name,
+                            song.image AS song_image,
+                            song.category AS song_category,
+                            song.albumname AS song_albumname,
+                            song.language AS song_language,
+                            song.price AS song_price,
+                            song.availability AS song_availability,
+                       
+                            album.id AS album_id,
+                            album.name AS album_name,
+                            album.image AS album_image,
+                            album.category AS album_category,
+                            album.language AS album_language,
+                            album.price AS album_price,
+                            album.availability AS album_availability,
+                       
+                            catalogue.id AS catalogue_id,
+                            catalogue.artist_id AS catalogue_artist_id,
+                            catalogue.price AS catalogue_price,
+                            catalogue.shares AS catalogue_shares
+                       
+                        FROM artist
+                        LEFT JOIN song ON artist.id = song.artist_id
+                        LEFT JOIN album ON artist.id = album.artist_id
+                        LEFT JOIN catalogue ON artist.id = catalogue.artist_id
+                        WHERE artist.name = ?""", (artist,))
+        data = cursor.fetchone()
+        
+        artist_data.append(Artist(*data[:8]) if data[0] is not None else None)
+        song_data.append(Song(*data[8:16]) if data[8] is not None else None)
+        album_data.append(Album(*data[16:23]) if data[16] is not None else None)
+        catalogue_data.append(Catalogue(*data[23:]) if data[23] is not None else None)
+    
+        print("Song Data:", song_data)
+        print("Album Data:", album_data)
+        print("Catalogue Data:", catalogue_data)
+    
+        return render_template('artists.html', catalogue_data=catalogue_data, song_data=song_data, album_data=album_data, artist_data=artist_data)
+
+        @details_bp.route('/artists/<int:artist_id>')
+            def artists(artist_id):
+                artist_data, song_data, album_data, catalogue_data, song_watchlist_count, album_watchlist_count, catalogue_watchlist_count = get_artist_data_by_id(artist_id)
+                return render_template('artists.html', catalogue=catalogue_data, song_data=song_data, album_data=album_data, artist=artist_data, song_watchlist_count=song_watchlist_count, album_watchlist_count=album_watchlist_count, catalogue_watchlist_count=catalogue_watchlist_count)
+    

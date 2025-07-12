@@ -1,0 +1,531 @@
+/*   RIGHT BLOCK   */
+
+.right-block {
+    display: flex;
+    flex-direction: column;
+    width: 28%;
+    position: fixed;
+    margin-left: 65%;
+    margin-top: 0.5rem;
+    background-color: black;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 88%;
+}
+
+.square-container {
+    position: relative;
+    width: 100%;
+}
+
+.square-container::before {
+    content: "";
+    display: block;
+    padding-top: 100%; /* Creates a square space based on width */
+}
+
+.block-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 93.5%;
+    height: 100%;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    margin-top: calc(6.5%/2);
+    margin-left: calc(6.5%/2);
+}
+
+
+.block-button {
+    z-index: 1;
+    background-color: #7216f4;
+    height: 4.5rem;
+    width: 4.5rem;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50px;
+    left: calc(6.5%/2 + 2%);
+    cursor: pointer;
+    bottom: 0;
+}
+
+.block-button svg {
+    fill: white;
+    height: 2.25rem;
+    width: 2.25rem;
+    padding-left: 6px;
+}
+
+.block-info {
+    width: 100%;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.block-info .bold {
+    width: 100%;
+    display: flex;
+    color: white;
+    align-items: center;
+    height: 2rem;
+    margin-top: 1.5rem;
+    padding-left: 1rem;
+}
+
+
+.block-info .bold txt {
+    margin-left: 15px;
+    font-size: 1.3rem;
+    color: grey;
+
+}
+
+.bold .follow {
+    position: absolute;
+    color: white;
+    border: 2px solid white;
+    border-radius: 10px;
+    text-align: center;
+    width: 7rem;
+    right: 15px
+}
+
+.bold .unfollow {
+    margin-left: 10px;
+    color: white;
+    border: 2px solid white;
+    border-radius: 10px;
+    text-align: center;
+    width: 7rem;
+    display: none;
+}
+
+.block-info .description {
+    color: #FFFFFF;
+    width: 93%;
+    padding-left: 1rem;
+}
+
+.block-info .socials{
+    color: white;
+    width: 100%;
+    display: flex;
+    height: 5rem;
+    align-items: center;
+    margin-bottom: 1rem;
+    position: relative;
+    margin-top: 5px;
+    flex-wrap: wrap;
+}
+
+.socials .social{
+    width: 11rem;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+    margin-left: 1rem;
+}
+
+.social svg {
+    height: 2rem;
+}
+
+
+
+/* LEFT BLOCK ______________________ LEFT BLOCK */
+
+.left-block {
+    width: 63%;
+    margin-top: 0.5rem;
+    margin-left: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.left-block .row {
+    width: 100%;
+    background-color: black;
+    height: 3rem;
+    color: var(--text-secondary);
+    border-radius: 25px;
+    align-items: center;
+    display: flex;
+    border: 3px solid #7216f4;
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+/* CATALOGUE _______________________ CATALOGUE */
+
+.left-block .catalogue {
+    width: 100%;
+    height: 28rem;
+    background-color: black;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.dropdown {
+    position: absolute;
+    display: inline-block;
+    right: 0;
+    padding-right: 2rem;
+    cursor: pointer;
+}
+
+.dropbtn svg {
+    fill: white; 
+    height: 1.5rem;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: grey;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    padding: 0.5rem;
+    border-radius: 15px;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block; 
+}
+
+.catalogue .add {
+    position: absolute;
+    cursor: pointer;
+    left: 30px;
+    top: 20px;
+}
+
+.catalogue .add svg {
+    height: 4rem
+}
+
+.catalogue .rmv {
+    position: absolute;
+    cursor: pointer;
+    left: 30px;
+    top: 20px;
+}
+
+.catalogue .rmv svg {
+    height: 4rem;
+}
+
+.catalogue .add_secondary {
+    position: absolute;
+    cursor: pointer;
+    display: none;
+    left: 30px;
+    top: 20px;
+}
+
+.catalogue .add_secondary svg {
+    height: 4rem
+}
+
+.catalogue .rmv_secondary {
+    position: absolute;
+    display: none;
+    cursor: pointer;
+    left: 30px;
+    top: 20px;
+}
+
+.catalogue .rmv_secondary svg {
+    height: 4rem;
+}
+
+
+.graph img {
+    object-fit: contain;
+    height: 80%;
+    border: 2px white solid;
+    width: 20rem;
+    margin-left: 2rem;
+}
+
+.catalogue .box {
+    height: 90%;
+    flex-grow: 0.95;
+    color: white;
+    display: flex;
+    justify-content: center;
+}
+
+.catalogue-change {
+    position: absolute;
+    font-size: 35px;
+    font-weight: 1000;
+    color: white;
+    bottom: 50px;
+    left: 2rem;
+}
+
+.catalogue-description {
+    display: flex;
+    width: 90%;
+    position: absolute;
+    top: 3rem;
+    flex-wrap: wrap;
+    max-height: 13rem;
+}
+
+.buy {
+    position: absolute;
+    text-align: center;
+    width: 70%;
+    bottom: 0;
+    margin: 1rem;
+    padding: 1.5rem;
+    height: 1rem;
+    border: 3px solid rgb(19, 172, 19);
+    color: rgb(31, 182, 31);
+    border-radius: 25px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.box .buy {
+    height: 0px !important;
+    width: 60% !important;
+    margin: 0.6rem !important;
+}
+
+.buy:hover {
+    filter: grayscale(0%) opacity(1);
+    background: rgb(0, 83, 13);
+    color: white;
+    border-color: white;
+
+    transition: var(--transition-speed);
+}
+
+/* ALBUMS _______________________ SONGS */
+
+.left-block .box {
+    width: 48%;
+    height: 25rem;
+    background-color: black;
+    display: flex;
+    align-items: center;
+    position: relative;
+    border-radius: 40px;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.box .title {
+    position: absolute; 
+    width: 90%;
+    padding-left: 1rem;
+    padding-top: 0.5rem;
+    top: 0;
+    color: white;
+    display: flex;
+    align-items: center;
+}
+
+.box .title h2 {
+    font-size: 1.5vw;
+}
+
+.box .add {
+    position: absolute;
+    cursor: pointer;
+    right: 2vw;
+    top: 1.75vw;
+}
+
+.box .rmv {
+    position: absolute;
+    cursor: pointer;
+    right: 2vw;
+    top: 1.75vw;
+}
+
+.box .add_secondary {
+    position: absolute;
+    cursor: pointer;
+    display: none;
+    right: 2vw;
+    top: 1.75vw;
+}
+
+.box .rmv_secondary {
+    position: absolute;
+    cursor: pointer;
+    right: 2vw;
+    top: 1.75vw;
+    display: none;
+}
+
+.addcategory_secondary {
+    display: none
+}
+
+.rmvcategory_secondary {
+    display: none;
+}
+
+.box .box-image {
+    height: 65%;
+    width: 59%;
+    background-size: contain;
+    background-position: center center;
+    margin-left: 1rem;
+    background-repeat: no-repeat;
+    background-color: black;
+}
+
+.box .information {
+    flex-grow: 1;
+    height: 60%;
+    color: white;
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    padding-left: 0.75rem;
+}
+
+.divide {
+    width: 100%;
+    font-size: 1.5vw;
+    font-weight: 500;
+}
+
+.stats {
+    width: 100%;
+    font-size: 2.5vw;
+    font-weight: 500;
+}
+
+.change {
+    position: absolute;
+    bottom: 0;
+    right: 20px;
+    font-size: 20px;
+    font-weight: 1000;
+}
+
+.box .explore {
+    position: absolute;
+    bottom: 0;
+    margin: 1rem;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid white;
+    border-radius: 10px;
+    width: 70%;
+    height: 0.75rem;
+    color: white;
+    font-size: 20px;
+}
+
+.explore:hover {
+    filter: grayscale(0%) opacity(1);
+    background: rgb(20, 20, 20);
+    color: var(--text-secondary);
+    border-color: var(--text-secondary);
+    font-weight: 1000;
+
+    transition: var(--transition-speed);
+}
+
+/* DISPLAY */
+
+.display {
+    position: fixed;
+    bottom: 5px;
+    border: 3px solid #7216f4;
+    margin-left: 35%;
+    height: 3rem;
+    width: auto;
+    font-family: 'Lato', sans-serif;
+    color: white;
+    background-color: black;
+    border-radius: 30px;
+    transition: opacity 0.5s, transform 0.5s;
+    opacity: 0;
+    transform: translateY(100%);
+    display: flex;
+    align-items: center;
+}
+
+
+.display.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.selected-image {
+    height: 80%;
+    padding: 1rem;
+}
+
+.update {
+    position: relative;
+    padding-right: 5px;
+    display: flex;
+}
+
+
+.small-graph {
+    height: 5rem;
+    width: 90%;
+    position: relative;
+}
+
+/* GRAPH ___________________________ GRAPH */
+
+/* Style the x-axis and y-axis ticks and labels */
+.x-axis path,
+.x-axis line,
+.y-axis path,
+.y-axis line {
+    fill: none;
+    shape-rendering: crispEdges;
+}
+
+.x-axis text {
+    font-size: 12px;
+    text-anchor: middle;
+}
+
+.y-axis text {
+    font-size: 12px;
+}
+
+/* Style chart title and labels if you have them */
+.chart-title {
+    font-size: 18px;
+    font-weight: bold;
+    text-anchor: middle;
+}
+
+.axis-label {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+path.line {
+    fill: none;
+    stroke: #7216f4;
+    stroke-width: 3.5;
+}

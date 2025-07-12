@@ -1,0 +1,261 @@
+{% extends "layout.html" %}
+
+{% block title %}Murilex | {{asset.name}}{% endblock %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/asset.css')}}" />
+
+
+
+<div class="left-block">
+
+
+    <div class="square-container">
+        <div class="block-image" style="background-image: url('{{ asset.image }}');"></div>
+        <div class="block-button">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                <path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/>
+            </svg>
+        </div>
+    </div>
+    
+    <div class="block-info">
+    
+        <div id="asset_details" data-asset-type="{{ asset_type }}" data-value="{{ asset.id }}" class="bold"> 
+            <h2>{{ asset.name }}</h2> 
+            <txt>{{ asset.category }}</txt>
+            {% if session["user_id"] %}
+                {% if count > 0 %}
+                    <a class="rmv" data-item-id="{{ asset.id }}" data-asset-type="{{ asset_type }}" data-action="remove">
+                        <svg xmlns="http://www.w3.org/2000/svg" style="fill: #7216f4" height="1.5rem" viewBox="0 0 448 512"><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zm88 200H296c13.3 0 24 10.7 24 24s-10.7 24-24 24H152c-13.3 0-24-10.7-24-24s10.7-24 24-24z"/></svg>
+                    </a>
+                    <a class="add_secondary" data-item-id="{{ asset.id }}" data-asset-type="{{ asset_type }}" data-action="add">
+                        <svg style="fill: #7216f4" xmlns="http://www.w3.org/2000/svg" height="1.5rem" viewBox="0 0 448 512"><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zM200 344V280H136c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H248v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"/></svg>
+                    </a>
+                {% elif count == 0 %}
+                    <a class="add" data-item-id="{{ asset.id }}" data-asset-type="{{ asset_type }}" data-action="add">
+                        <svg style="fill: #7216f4" xmlns="http://www.w3.org/2000/svg" height="1.5rem" viewBox="0 0 448 512"><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zM200 344V280H136c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H248v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"/></svg>
+                    </a> 
+                    <a class="rmv_secondary" data-item-id="{{ asset.id }}" data-asset-type="{{ asset_type }}" data-action="remove">
+                        <svg xmlns="http://www.w3.org/2000/svg" style="fill: #7216f4" height="1.5rem" viewBox="0 0 448 512"><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zm88 200H296c13.3 0 24 10.7 24 24s-10.7 24-24 24H152c-13.3 0-24-10.7-24-24s10.7-24 24-24z"/></svg>
+                    </a> 
+                {% endif %}   
+            {% endif %}   
+        </div>
+
+        {% if asset_type == 'song' or asset_type == 'album' %}
+        <div class="description" style="display: flex; align-items: center; margin-top: 0.5vw">
+            <a href="{{ url_for('details.artists', artist_id=asset.artist_id)}}" class="artist-image" style="background-image: url('{{ asset.author_image }}');"></a>
+            <a href="{{ url_for('details.artists', artist_id=asset.artist_id)}}" style="margin-left: 1.2vw; color: white; text-decoration: none; font-weight: 600;">{{ asset.author_name }}</a>
+        </div> 
+        {% endif %}
+
+
+
+        <div class="bold"> 
+            <h2>Order</h2>  
+            <div data-value="buy" class="buy-sell">
+                Buy
+                <svg style="margin-left: 0.5rem; fill: white" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512"><path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"/></svg>
+            </div>
+            <div data-value="sell" class="buy-sell">
+                Sell
+                <svg style="margin-left: 0.5rem; fill: white" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512"><path d="M547.6 103.8L490.3 13.1C485.2 5 476.1 0 466.4 0H109.6C99.9 0 90.8 5 85.7 13.1L28.3 103.8c-29.6 46.8-3.4 111.9 51.9 119.4c4 .5 8.1 .8 12.1 .8c26.1 0 49.3-11.4 65.2-29c15.9 17.6 39.1 29 65.2 29c26.1 0 49.3-11.4 65.2-29c15.9 17.6 39.1 29 65.2 29c26.2 0 49.3-11.4 65.2-29c16 17.6 39.1 29 65.2 29c4.1 0 8.1-.3 12.1-.8c55.5-7.4 81.8-72.5 52.1-119.4zM499.7 254.9l-.1 0c-5.3 .7-10.7 1.1-16.2 1.1c-12.4 0-24.3-1.9-35.4-5.3V384H128V250.6c-11.2 3.5-23.2 5.4-35.6 5.4c-5.5 0-11-.4-16.3-1.1l-.1 0c-4.1-.6-8.1-1.3-12-2.3V384v64c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V384 252.6c-4 1-8 1.8-12.3 2.3z"/></svg>
+            </div>
+        </div> 
+        <div class="order">
+            <div data-value="{{owned_shares}}" class="shares" id="shares-owned">
+                You own {{owned_shares}} shares.
+            </div>
+
+            <div class="order-type">
+                Order Type:
+                <div class="info">
+                    <svg style="cursor: pointer" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM216 336h24V272H216c-13.3 0-24-10.7-24-24s10.7-24 24-24h48c13.3 0 24 10.7 24 24v88h8c13.3 0 24 10.7 24 24s-10.7 24-24 24H216c-13.3 0-24-10.7-24-24s10.7-24 24-24zm40-208a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"/></svg>
+                </div>    
+                <div class="dropdown" style="margin-right: 10px">
+                    <button class="dropbtn"> Best Price Order </button>
+                    <div class="dropdown-content">
+                        <a id="best-price" data-value="Best Price Order">Best Price Order</a>
+                        <a id="limit-order" data-value="Limit Order">Limit Order</a>
+                    </div>
+                </div>
+            </div>
+            <div class="shares">
+                Shares: 
+                <input data-ask-count="{{ask_count}}" data-bid-count="{{bid_count}}" type="number" min="0" id="limit-shares-amount" class="total-shares" placeholder="Max. {{ask_count}}">
+            </div>
+            <div id="limit-price" class="shares">
+                Limit Price: 
+                <input type="number" min="0" id="limit-price-amount" class="total-shares" placeholder="0">
+            </div>
+            <div id="avg-price" class="total">
+                Avg. Price/Share: <txt id="asset_price" style="position: absolute; right: 10px"></txt>
+            </div>
+            <div class="total">
+                Total: 
+                <span id="total" class="total-amount"></span>
+            </div>
+
+            <div class="make-order">
+                <a id="review-order">Review Order</a>
+            </div>
+        </div>
+
+        <div class="bold" style="margin-top: 2vw;"> 
+            <h2>Details</h2> 
+        </div> 
+        <div class="description">
+            <p>Rights:</p>
+            <p>Royalty Type:</p>
+            <p>Offered By:</p>
+            <p>Release Date:</p>
+            <p>Total Shares:</p>
+            <p>Max ready to be bought:<txt>{{ ask_count }}</txt></p>
+            <p>Max ready to be sold:<txt>{{ bid_count }}</txt></p>
+            <p>Owned Shares:<txt>{{ owned_shares }}</txt></p>
+        </div>
+
+        <div class="bold"> 
+            <h2>Available On</h2>
+        </div> 
+
+        <div class="socials">
+            <a href="https://open.spotify.com/artist/3TVXtAsR1Inumwj472S9r4" class="social">
+                <svg style="margin-left: 10px; fill: green" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 496 512"><path d="M248 8C111.1 8 0 119.1 0 256s111.1 248 248 248 248-111.1 248-248S384.9 8 248 8zm100.7 364.9c-4.2 0-6.8-1.3-10.7-3.6-62.4-37.6-135-39.2-206.7-24.5-3.9 1-9 2.6-11.9 2.6-9.7 0-15.8-7.7-15.8-15.8 0-10.3 6.1-15.2 13.6-16.8 81.9-18.1 165.6-16.5 237 26.2 6.1 3.9 9.7 7.4 9.7 16.5s-7.1 15.4-15.2 15.4zm26.9-65.6c-5.2 0-8.7-2.3-12.3-4.2-62.5-37-155.7-51.9-238.6-29.4-4.8 1.3-7.4 2.6-11.9 2.6-10.7 0-19.4-8.7-19.4-19.4s5.2-17.8 15.5-20.7c27.8-7.8 56.2-13.6 97.8-13.6 64.9 0 127.6 16.1 177 45.5 8.1 4.8 11.3 11 11.3 19.7-.1 10.8-8.5 19.5-19.4 19.5zm31-76.2c-5.2 0-8.4-1.3-12.9-3.9-71.2-42.5-198.5-52.7-280.9-29.7-3.6 1-8.1 2.6-12.9 2.6-13.2 0-23.3-10.3-23.3-23.6 0-13.6 8.4-21.3 17.4-23.9 35.2-10.3 74.6-15.2 117.5-15.2 73 0 149.5 15.2 205.4 47.8 7.8 4.5 12.9 10.7 12.9 22.6 0 13.6-11 23.3-23.2 23.3z"/></svg>
+                <h3 style="margin-left: 10px;">Spotify</h3>
+            </a>
+            <a href="https://www.youtube.com/@DrakeOfficial" class="social">
+                <svg style="margin-left: 10px; fill: red" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512"><path d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z"/></svg>
+                <h3 style="margin-left: 10px;">Youtube</h3>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div id="Xtooltip" class="tooltip" style="font-weight: 600; position: absolute; left: 100px; top: 10px;">Date:<span id="Xvalue">X</span></div>
+<div id="Ytooltip" class="tooltip" style="font-weight: 600; position: absolute; left: 200px; top: 10px;">Price:<span id="Yvalue">Y</span>$</div>
+
+
+<div class="right-block">
+    <div id="message" class="message">This is the message element.</div>
+    <div class="graph-data">
+        <div id="chart-container" class="graph">
+        </div>
+        <div class="time"><txt class="scale" data-timeframe="1day">1 Day</txt><txt class="scale" style="background-color: #7216f4;" data-timeframe="1week">1 Week</txt><txt class="scale" data-timeframe="1month">1 Month</txt><txt class="scale" data-timeframe="1year">1 Year</txt><txt class="scale" data-timeframe="max">Max</txt></div> 
+        <div class="stats">
+            <div class="row"><h3>Share Price:</h3></div> 
+            <div id="asset-price" data-value="{{ asset.price }}" class="row"><h2>{{ asset.price }}</h2></div>    
+            <div class="row"> 00.00 <txt class="type">this week</txt> </div> 
+            <div class="row"><h3>Availability:</h3></div> 
+            <div class="row"><h2>{{ asset.availability }}</h2></div> 
+            <div class="row"> <a class="document">White Paper</a> <a class="document">General Purchase Agreement</a> </div> 
+        </div>
+    </div>
+    <div class="container">
+        <h2>Description</h2>
+    </div>
+    <!--<div class="container">
+        <txt>Released on July 15th 2016 the song has streamed over 2Bn times across platforms. The single has gone platinum eight times in Italy and two times platinum in Spain. After 7 years Sofia has gone through the streaming cycle and is now generating a stable number of streams. This makes the average yield, from the last 2 years, of 12.9% more stable and predictable (based on royalty returns from 2021 and 2022). Sofia is an excellent opportunity to kick off your own music catalogue with an anchor song that is on its way to become an evergreen. As the song is mature don't expect a sudden big increase of streams, this is with a high likelihood a more steady revenue ticket.</txt>
+    </div>-->
+    <div class="container">
+        <h2>Information</h2>
+    </div>
+    <div class="container">
+        <p>Learn about these metrics.</p>
+    </div>
+
+    <div class="container">
+        <h3>Royalty Data</h3>
+    </div>
+
+    <div class="container">
+        <div class="box">
+            <txt class="stat"><h4>Royalties Per Share</h4><txt>Not available yet</txt></txt>
+            <txt class="stat"><h4>Annual Royalty Yield</h4><txt>Not available yet</txt></txt>
+            <txt class="stat"><h4>Net master royalty ownership per share</h4><txt>Not available yet</txt></txt>
+        </div>
+    </div>
+
+    <div class="container">
+        <h3>Song Data</h3>
+    </div>
+
+    <div class="container">
+        <div class="box">
+            <txt class="stat"><h4>Total Shares</h4><txt>Not available yet</txt></txt>
+            <txt class="stat"><h4>Total Streams</h4><txt>Not available yet</txt></txt>
+            <txt class="stat"><h4>Projected Streams</h4><txt>Not available yet</txt></txt>
+        </div>
+    </div>
+
+    <div class="container">
+        <h3 class="order-button">Order Book</h3><h3 class="trade-button">Trade History</h3>
+    </div>
+
+    <div class="container">
+        <div id="bid-table" class="bid-table">
+            {% if bids %}
+                {% for bid in bids %}
+                    <div class="order-book">
+                        <div class="title-division">
+                            <txt>Size</txt>
+                            <txt>Bid</txt>
+                        </div>
+                        <div class="division">
+                            <txt id="bid_quantity_{{ loop.index }}" class="bid_quantity" data-value="{{bid.quantity}}">{{bid.quantity}}</txt>
+                            <txt id="bid_price_{{ loop.index }}" class="bid_price" data-value="{{bid.price}}">{{bid.price}}$</txt>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+            <txt class="title-division">No Bids.</txt>
+            {% endif %}
+        </div>
+
+        <div id="ask-table" class="ask-table">
+            {% if asks %}
+                {% for ask in asks %}
+                    <div class="order-book">
+                        <div class="title-division">
+                            <txt>Size</txt>
+                            <txt>Ask</txt>
+                        </div>
+                        <div class="division">
+                            <txt class="ask_quantity" data-value="{{ask.quantity}}">{{ask.quantity}}</txt>
+                            <txt class="ask_price" data-value="{{ask.price}}">{{ask.price}}$</txt>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+            <txt class="title-division">No Asks.</txt>
+            {% endif %}
+        </div>
+
+        <div class="title-division trade-history">
+            <txt width="25%">Date</txt>
+            <txt>Price</txt>
+            <txt>Quantity</txt>
+        </div>
+        {% if history %}
+            {% for point in history %}
+                <div class="stats trade-history">
+                    <txt width="25%">{{ point.timestamp }}</txt>
+                    <txt>{{point.price}}$</txt>
+                    <txt>{{point.quantity}}</txt>
+                </div>
+            {% endfor %}
+        {% else %}
+            <txt width="25%">No Transactions Yet.</txt>
+        {% endif %}
+        
+    </div>
+
+</div>
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+<script src="{{ url_for('static', filename='js/asset.js') }}"></script>
+
+{% endblock %}

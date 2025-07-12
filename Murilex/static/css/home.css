@@ -1,0 +1,285 @@
+/* ticker */
+
+.ticker-background {
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  width: 105%;
+  height: 10.5rem;
+  background-color: black;
+  left: -1.5rem;
+  overflow: hidden;
+}
+
+.ticker {
+    position: absolute;
+    display: flex;
+    overflow: hidden;
+    left: 0;
+  }
+  
+  .ticker__list {
+    display: flex;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    animation-name: ticker;
+    animation-duration: 30s;
+    height: 5.5rem;
+    background-color: none;
+    margin-left: 0;
+    margin-right: 0;
+    z-index: 1;
+  }
+  
+  .ticker:hover .ticker__list {
+    animation-play-state: paused;
+  }
+  
+  .ticker__item {
+    display: flex;
+    margin-right: 6rem;
+    height: 100%;
+    align-items: center;
+    width: 28rem;
+    flex-wrap: wrap;
+    position: relative;
+  }
+
+  .artist-info {
+    height: 100%;
+    width: 14rem;
+    position: absolute;
+    top: 10%;
+    right: 8.5rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .graph {
+    position: absolute;
+    right: -40px;
+    top: -10px;
+  }
+
+
+  .artist-image {
+    height: 4.5rem;
+    width: 4.5rem;
+    margin-right: 1rem; /* Adjust as needed */
+    object-fit: cover;
+  }
+  
+  .artist-name {
+    color: #7216f4;
+    font-size: 1.3rem; /* Adjust as needed */
+    font-family: 'Lato', sans-serif;
+    font-weight: 400;
+    width: 100%;
+    height: auto;
+    letter-spacing: 1px;
+  }
+
+  .artist-change {
+    color: white;
+    width: 100%;
+    font-size: 1.25rem;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+  }
+
+  .artist-price {
+    color: white;
+    width: 100%;
+  }
+
+
+  @keyframes ticker {
+    0% {
+      transform: translate3d(0, 0, 0);
+      visibility: visible;
+    }
+  
+    100% {
+      transform: translate3d(-100%, 0, 0);
+    }
+  }
+
+/* news */
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 100px;
+  position: relative;
+  top: 0;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.opinion {
+  height: 470px;
+  width: 66%;
+  display: flex;
+  color: white;
+  background-color: black;
+  border: 3px solid #7216f4;
+  border-radius: 25px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.opinion:hover {
+  transform: translateY(-5px); /* Translate the card upwards by 5 pixels */
+  box-shadow: 0 15px 20px rgba(0, 0, 0, 0.6); /* Add a shadow to the bottom */
+}
+.top-division {
+  width: 95%;
+  display: flex;
+  align-items: center;
+  margin-top: 2px;
+  margin-bottom: 5px;
+  color: white;
+  text-decoration: none;
+}
+
+.opinion-image {
+  width: 70%;
+  height: 70%;
+  border: 1px solid white;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+.news-division {
+  display: flex;
+  align-items: center;
+}
+
+.news-division txt {
+  margin-left: 10px;
+}
+
+.news-card {
+  flex: 0 0 calc(33.33% - 20px); /* Adjust as needed for desired column count */
+  margin: 10px;
+  padding: 15px;
+  border-radius: 25px;
+  border: 3px solid #7216f4;
+  background-color: black;
+  box-sizing: border-box;
+  text-align: left;
+  max-width: 600px;
+  width: 30%;
+  color: white;
+  overflow: hidden;
+  text-decoration: none;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+/* Style for .news-card when hovered */
+.news-card:hover {
+  transform: translateY(-5px); /* Translate the card upwards by 5 pixels */
+  box-shadow: 0 15px 20px rgba(0, 0, 0, 0.6); /* Add a shadow to the bottom */
+}
+
+
+.news-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.news-description {
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+.news-image-container {
+  max-height: 400px; /* Adjust the value as needed */
+  overflow: hidden;
+  text-decoration: none;
+  color: white;
+}
+
+.news-image {
+  width: 99%; /* Make sure the image occupies the entire container */
+  height: 100%; /* Maintain the aspect ratio */
+  object-fit: cover; /* Cover the container while maintaining aspect ratio */
+  display: block; /* Remove any vertical alignment gap */
+  border: 1px solid white;
+  max-height: 300px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+.view-button {
+  position: absolute;
+  padding: 0.5vw;
+  border: 2px solid white;
+  margin-bottom: 5px;
+  align-self: baseline;
+  border-radius: 10px;
+  margin-top: 5px;
+}
+
+#mycheckbox:checked ~ .moretext {
+  display: block;
+}
+
+.moretext{
+  display: none;
+}
+
+#mycheckbox{
+  display: none;
+}
+.showmore{
+  cursor: pointer;
+  width: 80%;
+  margin-left: 10%;
+  background: white;
+  border: 3px solid #7216f4;
+  border-radius: 25px;
+  height: 3rem;
+  font-size: 1.15vw;
+}
+
+/* GRAPH ___________________________ GRAPH */
+
+/* Style the x-axis and y-axis ticks and labels */
+.x-axis path,
+.x-axis line,
+.y-axis path,
+.y-axis line {
+    fill: none;
+    shape-rendering: crispEdges;
+}
+
+.x-axis text {
+    font-size: 12px;
+    text-anchor: middle;
+}
+
+.y-axis text {
+    font-size: 12px;
+}
+
+/* Style chart title and labels if you have them */
+.chart-title {
+    font-size: 18px;
+    font-weight: bold;
+    text-anchor: middle;
+}
+
+.axis-label {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+path.line {
+    fill: none;
+    stroke: #7216f4;
+    stroke-width: 0.5;
+}

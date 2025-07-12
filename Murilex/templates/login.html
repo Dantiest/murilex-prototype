@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% block title %}Murilex | Log In{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/login.css')}}" />
+
+    <!--<form action="/login" method="post">
+        <div class="mb-3">
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="username" name="username" placeholder="Username" type="text">
+        </div>
+        <div class="mb-3">
+            <input class="form-control mx-auto w-auto" id="password" name="password" placeholder="Password" type="password">
+        </div>
+        <button class="btn btn-primary" type="submit">Log In</button>
+    </form> !-->
+    <form action="/login" method="post">
+        <!--<div class="imgcontainer">
+          <img src="img_avatar2.png" alt="Avatar" class="avatar">
+        </div>-->
+      
+        <div class="container">
+          <h1>Log In</h1>
+
+          <label for="uname"><b>Username</b></label>
+          <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="username" name="username" placeholder="Username" type="text" required>
+      
+          <label for="psw"><b>Password</b></label>
+          <input class="form-control mx-auto w-auto" id="password" name="password" placeholder="Password" type="password" required>
+      
+          <button type="submit">Login</button>
+          <!--<label>
+            <input type="checkbox" checked="checked" name="remember"> Remember me
+          </label>-->
+        </div>
+      
+        <!--<div class="container" style="background-color:#f1f1f1">
+          <button type="button" class="cancelbtn">Cancel</button>
+          <span class="psw">Forgot <a href="#">password?</a></span>
+        </div>-->
+    </form>
+{% endblock %}

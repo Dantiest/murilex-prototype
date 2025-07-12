@@ -1,0 +1,407 @@
+.category-title {
+    display: flex;
+    width: 100%;
+    height: 20rem;
+    align-items: center;
+    margin-top: 0.5rem;
+}
+
+.category-title .box {
+    width: 16rem;
+    height: 16rem;
+    border-radius: 8px;
+    background-position: center;
+    background-size: cover;
+    position: relative;
+    margin-left: 1rem;
+    cursor: pointer;
+    border: 2px solid black;
+}
+
+
+.category-title .name-type{
+    display: flex;
+    height: auto;
+    width: auto;
+    max-width: 60%;
+    margin-left: 1rem;
+}
+
+.name-type .text {
+    width: auto;
+    margin-left: 1rem;
+    padding: 0;
+    color: rgb(0, 0, 0);
+    font-size: 50px;
+    font-family: 'Lato', sans-serif;
+    letter-spacing: 1px;
+    text-decoration: underline;
+}
+
+.name-type svg {
+    margin-top: 7px;
+    margin-left: 25px;
+}
+
+.category-title .type {
+    color: rgb(117, 117, 117);
+    font-size: 20px;
+    font-family: 'Lato', sans-serif;
+    margin-left: 23rem;
+    margin-top: 6rem;
+    letter-spacing: 1px;
+    position: absolute;
+}
+
+.category-title .type-img {
+    margin-left: 21rem;
+    margin-top: 6rem;
+    height: 0.9rem;
+    fill: rgb(117, 117, 117);
+    position: absolute;
+}
+
+.category-title .space{
+    flex-grow: 1;
+}
+
+/* SIMILAR CATEGORIES _______________________ RECOMMENDED */
+
+.category-title .similar-cats {
+    width: 37.5%;
+    height: 100%;
+    border: 5px solid #7216f4;
+    position: relative;
+    border-radius: 35px;
+    background-color: black;
+    color: white;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+.similar-cats .box-title {
+    font-family: 'Lato', sans-serif;
+    font-size: 20px;
+    letter-spacing: 1px;
+    margin-left: 0.5rem;
+    margin-top: 1rem;
+    font-weight: 400;
+    border: 4px solid white;
+    border-radius: 25px;
+    height: 1.8rem;
+    padding: 0.5rem;
+    align-items: center;
+}
+
+.recommended {
+    width: 100%;
+    height: 65%;
+    position: relative;
+    display: flex;
+    align-self: flex-end;
+    padding: 0;
+    flex-wrap: wrap;
+    margin-bottom: 5rem;
+    align-items: flex-start;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.recommended .recom-row{
+    width: 96%;
+    height: 28%;
+    position: relative;
+    display: flex;
+    padding: 0;
+    margin: 0;
+    align-items: center;
+    cursor: pointer;  
+    border-radius: 15px;
+}
+
+.recommended .recom-row:hover{
+    background-color: rgb(41, 41, 41);
+}
+
+.recom-image {
+    height: 87%;
+    position: relative;
+    margin-left: 4px;
+}
+.recom-name {
+    font-size: 20px;
+    position: relative;
+    margin-left: 10px;
+    letter-spacing: 1px;
+    font-weight: 1000;
+}
+
+.recom-row .recom-type svg {
+    fill: white;
+    height: 1rem;
+    margin-right: 5px;
+}
+
+.recom-row .space{
+    flex-grow: 1;
+}
+
+
+/* TABLE   ___________________________________________   TABLE */
+
+.category-table {
+    width: 100%;
+    display: flex;
+    height: auto;
+    margin-top: 0.5rem;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
+.title-row {
+    background-color: black;
+    color: white;
+    font-family: 'Lato', sans-serif;
+    width:100%;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.title-row .name {
+    position: relative;
+    margin-left: 4.5%;
+}
+
+.title-row .title-author {
+    position: absolute;
+    margin-left: 27.5%;
+}
+
+.title-row .title-price {
+    position: absolute;
+    margin-left: 49%;
+}
+
+.title-row .title-available {
+    position: absolute;
+    margin-left: 75%;
+}
+
+.title-row .title-add {
+    position: absolute;
+    right: 0.7%;
+}
+
+
+
+/* ROWS ________________ ROWS */
+
+.category-table .row {
+    width: 100%;
+    display: flex;
+    height: 3rem;
+    align-items: center;
+    border-bottom: 3px solid #7216f4;  
+}
+
+
+.row .numb {
+    margin-left: 1.5rem;
+}
+
+.row .title {
+    position: absolute;
+    margin-left: 5%;
+    height: calc(3rem *0.8);
+    max-width: 20%;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.title .image-song{
+    height: 100%;
+    position: relative;
+}
+
+.title .song-name{
+    position: relative;
+    margin-left: 10%;
+    cursor: pointer;
+    height: 1rem;
+    white-space: nowrap;
+}
+
+.row .author {
+    position: absolute;
+    margin-left: 27.5%;
+    height: calc(3rem *0.8);
+    max-width: 20%;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.author .author-image{
+    height: 100%;
+    position: relative;
+}
+
+.author .author-name{
+    position: relative;
+    margin-left: 10%;
+    cursor: pointer;
+    height: 1rem;
+    white-space: nowrap;
+}
+
+
+.row .price {
+    position: absolute;
+    margin-left: 49%;
+}
+
+.row .graph{
+    height: 3rem;
+    margin-left: 56%;
+    position: absolute;
+}
+
+.row .available{
+    position: absolute;
+    margin-left: 75%;
+}
+
+.row .add {
+    position: absolute;
+    right: 3%;
+    cursor: pointer;
+}
+
+.row .rmv {
+    position: absolute;
+    right: 3%;
+    cursor: pointer;
+}
+
+.row .add_secondary {
+    position: absolute;
+    right: 3%;
+    cursor: pointer;
+    display: none;
+}
+
+.row .rmv_secondary {
+    position: absolute;
+    display: none;
+    right: 3%;
+    cursor: pointer;
+}
+
+.rmvcategory_secondary {
+    display: none;
+}
+
+/* PULSE ANIMATION */
+
+.pulse-object {
+    cursor: pointer;
+    box-shadow: 0 0 0 rgba(114, 22, 244, 0.7);
+    transition: box-shadow 0.3s ease-in-out;
+    border-radius: 20px;
+}
+
+.pulse-animation {
+    animation: pulse 0.8s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(114, 22, 244, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 20px rgba(114, 22, 244, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(114, 22, 244, 0);
+    }
+}
+
+/* DISPLAY  ______________________ DISPLAY */
+
+.display {
+    position: fixed;
+    bottom: 5px;
+    border: 3px solid #7216f4;
+    margin-left: 35%;
+    height: 3rem;
+    width: auto;
+    font-family: 'Lato', sans-serif;
+    color: white;
+    background-color: black;
+    border-radius: 30px;
+    transition: opacity 0.5s, transform 0.5s;
+    opacity: 0;
+    transform: translateY(100%);
+    display: flex;
+    align-items: center;
+}
+
+
+.display.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.selected-image {
+    height: 80%;
+    padding: 1rem;
+}
+
+.update {
+    position: relative;
+    padding-right: 5px;
+    display: flex;
+}
+
+/* GRAPH ___________________________ GRAPH */
+
+/* Style the x-axis and y-axis ticks and labels */
+.x-axis path,
+.x-axis line,
+.y-axis path,
+.y-axis line {
+    fill: none;
+    shape-rendering: crispEdges;
+}
+
+.x-axis text {
+    font-size: 12px;
+    text-anchor: middle;
+}
+
+.y-axis text {
+    font-size: 12px;
+}
+
+/* Style chart title and labels if you have them */
+.chart-title {
+    font-size: 18px;
+    font-weight: bold;
+    text-anchor: middle;
+}
+
+.axis-label {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+path.line {
+    fill: none;
+    stroke: #7216f4;
+    stroke-width: 3.5;
+}

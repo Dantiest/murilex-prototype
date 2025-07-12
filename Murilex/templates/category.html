@@ -1,0 +1,160 @@
+{% extends "layout.html" %}
+
+{% block title %}Murilex | {{ category_name }}{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/category.css')}}" />
+
+<div class="category-title">
+    <div class="box" style="background-image: url({{ category_image }})"></div>
+    <div class="name-type">
+        {% if session["user_id"] %}
+            {% if category_watchlist_count[category_id] > 0 %}
+                <a data-index="0" class="rmvcategory" data-item-id="{{ category_id }}" data-action="remove">
+                    <svg xmlns="http://www.w3.org/2000/svg" style="fill: #7216f4" height="3rem" viewBox="0 0 448 512"><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zm88 200H296c13.3 0 24 10.7 24 24s-10.7 24-24 24H152c-13.3 0-24-10.7-24-24s10.7-24 24-24z"/></svg>
+                </a>
+                <a data-index="0" class="addcategory_secondary" data-item-id="{{ category_id }}" data-action="add">
+                    <svg style="fill: #7216f4" xmlns="http://www.w3.org/2000/svg" height="3rem" viewBox="0 0 448 512"><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zM200 344V280H136c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H248v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"/></svg>
+                </a>
+            {% else %}
+                <a data-index="0" class="addcategory" data-item-id="{{ category_id }}" data-action="add">
+                    <svg xmlns="http://www.w3.org/2000/svg" style="fill: #7216f4" height="3rem" viewBox="0 0 448 512"><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zM200 344V280H136c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H248v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"/></svg>
+                </a>
+                <a data-index="0" class="rmvcategory_secondary" data-item-id="{{ category_id }}" data-action="remove">
+                    <svg xmlns="http://www.w3.org/2000/svg" style="fill: #7216f4" height="3rem" viewBox="0 0 448 512"><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zm88 200H296c13.3 0 24 10.7 24 24s-10.7 24-24 24H152c-13.3 0-24-10.7-24-24s10.7-24 24-24z"/></svg>
+                </a>
+            {% endif %}
+        {% endif %}
+        <div class="text"><strong>{{ category_name }}</strong></div>
+    </div>
+
+    {% if asset_type == 'song' %}
+
+    <svg class="type-img" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M499.1 6.3c8.1 6 12.9 15.6 12.9 25.7v72V368c0 44.2-43 80-96 80s-96-35.8-96-80s43-80 96-80c11.2 0 22 1.6 32 4.6V147L192 223.8V432c0 44.2-43 80-96 80s-96-35.8-96-80s43-80 96-80c11.2 0 22 1.6 32 4.6V200 128c0-14.1 9.3-26.6 22.8-30.7l320-96c9.7-2.9 20.2-1.1 28.3 5z"/></svg>
+    <div class="type"><strong>Songs</strong></div>
+
+    {% elif asset_type == 'album' %}
+   
+    <svg class="type-img" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><style>svg{fill:#ffffff}</style><path d="M0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm256 32a32 32 0 1 1 0-64 32 32 0 1 1 0 64zm-96-32a96 96 0 1 0 192 0 96 96 0 1 0 -192 0zM96 240c0-35 17.5-71.1 45.2-98.8S205 96 240 96c8.8 0 16-7.2 16-16s-7.2-16-16-16c-45.4 0-89.2 22.3-121.5 54.5S64 194.6 64 240c0 8.8 7.2 16 16 16s16-7.2 16-16z"/></svg>
+    <div class="type"><strong>Albums</strong></div>
+
+    {% elif asset_type == 'catalogue' %}
+    
+    <svg class="type-img" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><style>svg{fill:#ffffff}</style><path d="M264.5 5.2c14.9-6.9 32.1-6.9 47 0l218.6 101c8.5 3.9 13.9 12.4 13.9 21.8s-5.4 17.9-13.9 21.8l-218.6 101c-14.9 6.9-32.1 6.9-47 0L45.9 149.8C37.4 145.8 32 137.3 32 128s5.4-17.9 13.9-21.8L264.5 5.2zM476.9 209.6l53.2 24.6c8.5 3.9 13.9 12.4 13.9 21.8s-5.4 17.9-13.9 21.8l-218.6 101c-14.9 6.9-32.1 6.9-47 0L45.9 277.8C37.4 273.8 32 265.3 32 256s5.4-17.9 13.9-21.8l53.2-24.6 152 70.2c23.4 10.8 50.4 10.8 73.8 0l152-70.2zm-152 198.2l152-70.2 53.2 24.6c8.5 3.9 13.9 12.4 13.9 21.8s-5.4 17.9-13.9 21.8l-218.6 101c-14.9 6.9-32.1 6.9-47 0L45.9 405.8C37.4 401.8 32 393.3 32 384s5.4-17.9 13.9-21.8l53.2-24.6 152 70.2c23.4 10.8 50.4 10.8 73.8 0z"/></svg>
+    <div class="type"><strong>Catalogues</strong></div>
+    
+    {% endif %}
+    
+    <div class="space"></div>
+
+    <div class="similar-cats">
+        <div class="box-title">Similar Categories:</div>
+        <ul class="recommended" style="list-style: none;">
+            <li class="recom-row">
+                <img class="recom-image" src={{ category_image }}>
+                <txt class="recom-name">{{ category_name }}</txt>
+                <div class="space"></div>
+                <txt class="recom-type"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M499.1 6.3c8.1 6 12.9 15.6 12.9 25.7v72V368c0 44.2-43 80-96 80s-96-35.8-96-80s43-80 96-80c11.2 0 22 1.6 32 4.6V147L192 223.8V432c0 44.2-43 80-96 80s-96-35.8-96-80s43-80 96-80c11.2 0 22 1.6 32 4.6V200 128c0-14.1 9.3-26.6 22.8-30.7l320-96c9.7-2.9 20.2-1.1 28.3 5z"/></svg></txt>
+            </li>
+            <li class="recom-row">
+                <img class="recom-image" src={{ category_image }}>
+                <txt class="recom-name">{{ category_name }}</txt>
+                <div class="space"></div>
+                <txt class="recom-type"><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><style>svg{fill:#ffffff}</style><path d="M0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm256 32a32 32 0 1 1 0-64 32 32 0 1 1 0 64zm-96-32a96 96 0 1 0 192 0 96 96 0 1 0 -192 0zM96 240c0-35 17.5-71.1 45.2-98.8S205 96 240 96c8.8 0 16-7.2 16-16s-7.2-16-16-16c-45.4 0-89.2 22.3-121.5 54.5S64 194.6 64 240c0 8.8 7.2 16 16 16s16-7.2 16-16z"/></svg></txt>
+            </li>
+            <li class="recom-row">
+                <!--<img class="recom-image" src="static/heroes-and-villains.jpg">-->
+                <txt class="recom-name">Top-100: Spotify</txt>
+                <div class="space"></div>
+                <txt class="recom-type"><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512"><style>svg{fill:#ffffff}</style><path d="M264.5 5.2c14.9-6.9 32.1-6.9 47 0l218.6 101c8.5 3.9 13.9 12.4 13.9 21.8s-5.4 17.9-13.9 21.8l-218.6 101c-14.9 6.9-32.1 6.9-47 0L45.9 149.8C37.4 145.8 32 137.3 32 128s5.4-17.9 13.9-21.8L264.5 5.2zM476.9 209.6l53.2 24.6c8.5 3.9 13.9 12.4 13.9 21.8s-5.4 17.9-13.9 21.8l-218.6 101c-14.9 6.9-32.1 6.9-47 0L45.9 277.8C37.4 273.8 32 265.3 32 256s5.4-17.9 13.9-21.8l53.2-24.6 152 70.2c23.4 10.8 50.4 10.8 73.8 0l152-70.2zm-152 198.2l152-70.2 53.2 24.6c8.5 3.9 13.9 12.4 13.9 21.8s-5.4 17.9-13.9 21.8l-218.6 101c-14.9 6.9-32.1 6.9-47 0L45.9 405.8C37.4 401.8 32 393.3 32 384s5.4-17.9 13.9-21.8l53.2-24.6 152 70.2c23.4 10.8 50.4 10.8 73.8 0z"/></svg></txt>
+            </li>
+            <li class="recom-row">
+                <!--<img class="recom-image" src="static/murexe_out.jpg">-->
+                <txt class="recom-name">Category_Name</txt>
+                <div class="space"></div>
+                <txt class="recom-type"><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 192 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><style>svg{fill:#ffffff}</style><path d="M48 80a48 48 0 1 1 96 0A48 48 0 1 1 48 80zM0 224c0-17.7 14.3-32 32-32H96c17.7 0 32 14.3 32 32V448h32c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H64V256H32c-17.7 0-32-14.3-32-32z"/></svg></txt>
+            </li>
+        </ul>
+    </div>
+</div>
+
+{% if data %}
+    <div class="category-table">
+        <div class="title-row">
+            <txt class="name"> Title </txt>
+
+            {% if asset_type == 'song' or asset_type == 'album' %}
+            <txt class="title-author"> Author </txt>
+            {% endif %}
+            
+            <txt class="title-price"> Price </txt>
+            <txt class="title-available"> Available </txt>
+            {% if session["user_id"] %}
+                <txt class="title-add" style="padding-right: 2rem;"> Add </txt>
+            {% endif %}
+        </div>
+        {% for item in data %}
+        <div class="row">
+            <txt class="numb">{{ loop.index }}</txt>
+
+
+            <a class="title" href="{{ url_for('details.asset', asset_name=item.name, type=asset_type)}}">
+                <img class="image-song" data-value="{{ item.image }}" src="{{ item.image }}">
+                <div class="song-name" data-value="{{ item.name }}">{{ item.name }}</div>
+            </a>
+
+
+            <a class="author" href="{{ url_for('details.artists', artist_id=item.artist_id)}}">
+                <img  class="author-image" src="{{ item.author_image }}">
+                <txt class="author-name">{{ item.author_name }}</txt>
+            </a>
+            
+            <txt data-asset-id="{{ item.id }}" data-asset-type={{ asset_type }} class="price"><txt class="price-value">{{ item.price }} $</txt><txt class="price-change" style="margin-left: 0.5vw;"> {{ item.price_change }}% </txt></txt>
+            <div data-item-id="{{ item.id }}" data-asset-type={{asset_type}} id="chart-container" class="graph">
+
+                <!--<img src="{{ url_for('static', filename='image/murexe_out.jpg') }}"> -->
+            </div>
+            <txt class="available">{{ item.availability }}</txt>
+            <div data-item-id="{{ item.id }}" data-asset-type={{ asset_type }} id="chart-container" class="graph">
+
+                <!--<img src="{{ url_for('static', filename='image/murexe_out.jpg') }}"> -->
+            </div>
+            {% if session["user_id"] %}
+                {% if item_watchlist_count[item.id] > 0 %}
+                    <a data-index="{{ loop.index + 1 }}" class="rmv" data-item-id="{{ item.id }}" data-asset-type="{{ asset_type }}" data-action="remove">
+                        <svg xmlns="http://www.w3.org/2000/svg" style="fill: #7216f4" height="1.5rem" viewBox="0 0 448 512"><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zm88 200H296c13.3 0 24 10.7 24 24s-10.7 24-24 24H152c-13.3 0-24-10.7-24-24s10.7-24 24-24z"/></svg>
+                    </a>
+                    <a data-index="{{ loop.index + 1 }}" class="add_secondary" data-item-id="{{ item.id }}" data-asset-type="{{ asset_type }}" data-action="add">
+                        <svg style="fill: #7216f4" xmlns="http://www.w3.org/2000/svg" height="1.5rem" viewBox="0 0 448 512"><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zM200 344V280H136c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H248v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"/></svg>
+                    </a>
+                {% else %}
+                    <a data-index="{{ loop.index + 1 }}" class="add" data-item-id="{{ item.id }}" data-asset-type="{{ asset_type }}" data-action="add">
+                        <svg style="fill: #7216f4" xmlns="http://www.w3.org/2000/svg" height="1.5rem" viewBox="0 0 448 512"><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zM200 344V280H136c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H248v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"/></svg>
+                    </a>
+                    <a data-index="{{ loop.index + 1 }}" class="rmv_secondary" data-item-id="{{ item.id }}" data-asset-type="{{ asset_type }}" data-action="remove">
+                        <svg xmlns="http://www.w3.org/2000/svg" style="fill: #7216f4" height="1.5rem" viewBox="0 0 448 512"><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zm88 200H296c13.3 0 24 10.7 24 24s-10.7 24-24 24H152c-13.3 0-24-10.7-24-24s10.7-24 24-24z"/></svg>
+                    </a>
+                {% endif %}
+            {% endif %}
+        </div>
+        {% endfor %}
+
+
+    </div>
+{% else %}
+    Coming soon
+{% endif %}
+
+<div class="display">
+    <img class="selected-image">
+    <div class="update">
+        <div class="selected-name" style="color: white; font-weight: 150;"></div> <txt style="padding-left: 0.3rem;">has been</txt>
+        <div class="add_or_rmv" style="padding-left: 0.3rem;"></div><txt style="padding-left: 0.3rem; padding-right: 1rem;"> your Watchlist.</txt>
+    </div>
+</div>
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+<script src="{{ url_for('static', filename='js/category.js')}}"></script>
+
+{% endblock %}

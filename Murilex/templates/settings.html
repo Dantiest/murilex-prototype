@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block title %}Murilex | Settings{% endblock %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/settings.css')}}" />
+
+
+<form action="/update_settings" method="post">
+    <h3>Select Graph Timeframe:</h3>
+    <label><input type="radio" name="graph_timeframe" value="1day" {% if selected_graph_timeframe == '1day' %}checked{% endif %}>1 Day</label>
+    <label><input type="radio" name="graph_timeframe" value="1week" {% if selected_graph_timeframe == '1week' %}checked{% endif %}>1 Week</label>
+    <label><input type="radio" name="graph_timeframe" value="1month" {% if selected_graph_timeframe == '1month' %}checked{% endif %}>1 Month</label>
+    <label><input type="radio" name="graph_timeframe" value="1year" {% if selected_graph_timeframe == '1year' %}checked{% endif %}>1 Year</label>
+    <label><input type="radio" name="graph_timeframe" value="max" {% if selected_graph_timeframe == 'max' %}checked{% endif %}>Max</label>
+    
+    <h3 style="margin-top: 2rem">Select Price-Change Timeframe:</h3>
+    <label><input type="radio" name="price_change_timeframe" value="single" {% if selected_price_change_timeframe == 'single' %}checked{% endif %}>Single</label>
+    <label><input type="radio" name="price_change_timeframe" value="day" {% if selected_price_change_timeframe == 'day' %}checked{% endif %}>1 Day</label>
+    <label><input type="radio" name="price_change_timeframe" value="week" {% if selected_price_change_timeframe == 'week' %}checked{% endif %}>1 Week</label>
+    <label><input type="radio" name="price_change_timeframe" value="month" {% if selected_price_change_timeframe == 'month' %}checked{% endif %}>1 Month</label>
+    <label><input type="radio" name="price_change_timeframe" value="year" {% if selected_price_change_timeframe == 'year' %}checked{% endif %}>1 Year</label>
+    <label><input type="radio" name="price_change_timeframe" value="max" {% if selected_price_change_timeframe == 'max' %}checked{% endif %}>Max</label>
+
+    <input type="submit" value="Save" class="save-button">
+</form>
+
+<script src="{{ url_for('static', filename='js/settings.js') }}"></script>
+
+{% endblock %}

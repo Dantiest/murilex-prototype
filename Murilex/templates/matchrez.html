@@ -1,0 +1,80 @@
+
+def match_orders(asset_id, asset_type):
+    try:
+        bids = get_bids(asset_id, asset_type)
+        if bids is None:
+            bids = []
+
+        asks = get_asks(asset_id, asset_type)
+        if asks is None:
+            asks = []
+
+        # Create copies of the bids and asks lists
+        bids_copy = bids.copy()
+        asks_copy = asks.copy()
+
+        for bid in bids_copy:
+            for ask in asks_copy:
+                if bid['price'] >= ask['price']:
+                    # Match found: bid price is greater than or equal to ask price
+
+                    # Calculate transaction price and quantity
+                    transaction_price = ask['price']  # Using the ask price
+                    transaction_quantity = min(bid['quantity'], ask['quantity'])
+
+                    # Insert the transaction into the transaction history
+                    insert_transaction({
+                        'user_id': bid['user_id'],
+                        'asset_id': bid['asset_id'],
+                        'asset_type': bid['asset_type'],
+                        'transaction_type': 'purchase',
+                        'price': transaction_price,
+                        'quantity': transaction_quantity
+                    })
+
+                    insert_transaction({
+                        'user_id': ask['user_id'],
+                        'asset_id': ask['asset_id'],
+                        'asset_type': ask['asset_type'],
+                        'transaction_type': 'sale',
+                        'price': transaction_price,
+                        'quantity': transaction_quantity
+                    })
+
+                    deduct_user_available_balance(bid['user_id'], transaction_price)
+
+                    # Update bid and ask quantities
+                    bid['quantity'] -= transaction_quantity
+                    ask['quantity'] -= transaction_quantity
+
+                    # Remove fully matched orders
+                    if bid['quantity'] <= 0:
+                        # Remove the bid from the bids list
+                        bids.remove(bid)
+                        delete_bid(bid['id'])
+                    if ask['quantity'] <= 0:
+                        # Remove the ask from the asks list
+                        asks.remove(ask)
+                        delete_ask(ask['id'])
+
+                    # Deduct matched assets from the seller's portfolio
+                    # seller_id = ask['user_id']
+                    # asset_id = ask['asset_id']
+                    # asset_type = ask['asset_type']
+                    # print('seller quantity:', ask)
+                    # deduct_from_portfolio(seller_id, asset_id, asset_type, transaction_quantity)
+
+                    # Add matched assets to the buyer's portfolio
+                    buyer_id = bid['user_id']
+                    asset_id = bid['asset_id']
+                    asset_type = bid['asset_type']
+                    add_to_portfolio(buyer_id, asset_id, asset_type, transaction_quantity)
+
+        # Update the order book in the database
+        update_order_book_in_database(bids, asks)
+
+        socketio.emit('order_processed', {'success': True})
+    except Exception as error:
+        # Handle exceptions here, e.g., log the error
+        print("Error in match_orders:", error)
+        socketio.emit('order_processed', {'success': False, 'error': 'Error message here'})

@@ -1,0 +1,93 @@
+{% extends "layout.html" %}
+
+{% block title %}Discover{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/discover.css')}}" >
+
+
+<div class="container">
+    <div class="carousel">
+        <div class="slider" style="width: calc({{ num_artists }}*100%)">
+            {% for artist in artists %}
+            <div class="profile">
+                <div class="featured"><svg style="fill: red; height : 1rem; padding: 0" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 384 512"><path d="M153.6 29.9l16-21.3C173.6 3.2 180 0 186.7 0C198.4 0 208 9.6 208 21.3V43.5c0 13.1 5.4 25.7 14.9 34.7L307.6 159C356.4 205.6 384 270.2 384 337.7C384 434 306 512 209.7 512H192C86 512 0 426 0 320v-3.8c0-48.8 19.4-95.6 53.9-130.1l3.5-3.5c4.2-4.2 10-6.6 16-6.6C85.9 176 96 186.1 96 198.6V288c0 35.3 28.7 64 64 64s64-28.7 64-64v-3.9c0-18-7.2-35.3-19.9-48l-38.6-38.6c-24-24-37.5-56.7-37.5-90.7c0-27.7 9-54.8 25.6-76.9z"/></svg>Featured </div>
+                <div class="image" style="background-image: url({{ artist.image }});"></div>
+                <div class="info">
+                    <div style="width: 100%; display: flex; align-items: center; padding-bottom: 1.25rem;"><h1 style="letter-spacing: 1px; padding: 0; margin: 0">{{ artist.name }}</h1><h2 style="margin: 5px; margin-left: 15px; color: grey;">{{ artist.category }}</h2></div> 
+                    <div class="top_albums">
+                        <div class="row" style="text-decoration: underline; margin-top: 15px; margin-bottom: 5px;">TOP ALBUMS</div>
+                        {% for album in artist.albums %}
+                        <div class="row"> 
+                            <img src="{{ album.image }}" height="100%">
+                            <txt style="margin-left: 10px;">{{ album.name }}</txt>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div class="top_songs">
+                        <div class="row" style="text-decoration: underline; margin-top: 15px; margin-bottom: 5px;">TOP SONGS</div>
+                        {% for song in artist.songs %}
+                        <div class="row"> 
+                            <img src="{{ song.image }}" height="100%">
+                            <txt style="margin-left: 10px;">{{ song.name }}</txt>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="controls">
+            <span class="arrow left">
+                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512" style="fill:#ffffff; height: 30px"><path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"/></svg>
+            </span>
+            <span class="arrow right">
+                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512" style="fill:#ffffff; height: 30px"><path d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"/></svg>
+            </span>
+            <ul>
+                {% for artist in artists %}
+                <li></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="filter">
+    <div class="dropdown" style="margin-right: 10px">
+        <button class="dropbtn"><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512" style="fill:#7216f4; height: 70%; margin-left: 3px; margin-top: 1px"><path d="M3.9 54.9C10.5 40.9 24.5 32 40 32H472c15.5 0 29.5 8.9 36.1 22.9s4.6 30.5-5.2 42.5L320 320.9V448c0 12.1-6.8 23.2-17.7 28.6s-23.8 4.3-33.5-3l-64-48c-8.1-6-12.8-15.5-12.8-25.6V320.9L9 97.3C-.7 85.4-2.8 68.8 3.9 54.9z"/></svg>   Filter By: </button>
+        <div class="dropdown-content">
+            <a href="#" data-value="Genre">Genre</a>
+            <a href="#" data-value="Country">Country</a>
+            <a href="#" data-value="Language">Language</a>
+            <a href="#" data-value="Type">Type</a>
+        </div>
+    </div>
+    <div class="selected-box"></div>
+</div>
+
+<div class="categories">
+    <a class="box zoom-out" href="{{ url_for('category_songs', category='Rap') }}" style="background-image: url({{ url_for('static', filename='image/drake.jpg')}});">
+        <txt class="title">Category: Rap</txt>
+    </a>
+    <a class="box" href="{{ url_for('dynamic_page', page_name='pop') }}" style="background-image: url({{ url_for('static', filename='image/murexe_out.jpg')}});">
+        <txt class="title">Category: Pop</txt>
+    </a>
+    <a class="box" href="{{ url_for('category_songs', category='Rock') }}" style="background-image: url({{ url_for('static', filename='image/murexe_out.jpg')}});">
+        <txt class="title">Category: Rock</txt>
+    </a>
+    <a class="box" href="#" style="background-image: url({{ url_for('static', filename='image/murexe_out.jpg')}});">
+        <txt class="title">Category: Hip-Hop</txt>
+    </a>
+    <a class="box" href="#" style="background-image: url({{ url_for('static', filename='image/murexe_out.jpg')}});">
+        <txt class="title">Category: Jazz</txt>
+    </a>
+    <a class="box" href="#" style="background-image: url({{ url_for('static', filename='image/murexe_out.jpg')}});">
+        <txt class="title">Category: Classical</txt>
+    </a>
+</div>
+
+
+<script src="{{ url_for('static', filename='js/discover.js')}}"></script>
+
+{% endblock %}

@@ -1,0 +1,496 @@
+.all {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.user {
+    width: 100%;
+    display: flex;
+    background-color: rgb(237, 236, 236);
+    align-items: center;
+    padding: 1rem;
+    position: relative;
+    flex-wrap: wrap;
+}
+
+.username {
+    font-size: 2rem;
+    margin-right: 1vw;
+    margin-left: 1vw;
+}
+
+.user-image {
+    height: 10rem;
+    width: 10rem;
+    margin-left: 5vw;
+}
+
+.details {
+    height: 70%;
+    width: 18%;
+    position: absolute;
+    right: 10vw;
+}
+
+.row {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 7px;
+}
+
+.graph-container {
+    margin-top: 10px;
+    border: 3px solid black;
+    width: 60%;
+    height: 25vw;
+    padding: 3vw
+}
+
+.graph {
+    width: 100%;
+    height: 100%;
+    /*border: 1px solid red;*/
+}
+
+.user .switch {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.switch-button {
+    margin-right: 2%;
+    text-align: center;
+    padding: 0.5rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+#edit-profile {
+    cursor: pointer;
+    fill: black;
+    transition: 0.3s ease-in;
+}
+
+#edit-profile:hover {
+    fill: #7216f4;
+}
+
+/* USER_TABLE */
+
+/*  CATALOGUES_TABLE    ________________     CATALOGUES_TABLE  */
+
+.category-table {
+    width: 100%;
+    height: auto;
+    margin-top: 0.5rem;
+    flex-direction: column;
+}
+
+.title-row {
+    background-color: black;
+    color: white;
+    font-family: 'Lato', sans-serif;
+    width: 100%;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.title-row .name {
+    position: relative;
+    margin-left: 4.5%;
+}
+
+.title-row .title-author {
+    position: absolute;
+    margin-left: 27.5%;
+}
+
+.title-row .title-price {
+    position: absolute;
+    margin-left: 49%;
+}
+
+.title-row .title-available {
+    position: absolute;
+    margin-left: 75%;
+}
+
+.title-row .title-add {
+    position: absolute;
+    right: 0.7%;
+}
+
+
+/* ROWS ________________ ROWS */ 
+
+.category-table .row {
+    width: 100%;
+    display: flex;
+    height: 3rem;
+    align-items: center;
+    border-bottom: 3px solid #7216f4;  
+    position: relative;
+}
+
+
+.row .image-song{
+    height: 80%;
+    position: relative;
+    margin-left: 2%;
+    cursor: pointer;
+}
+
+.row .name{
+    position: relative;
+    margin-left: 8.5px;
+    cursor: pointer;
+}
+
+.row .author {
+    position: absolute;
+    margin-left: 27.5%;
+    height: calc(3rem *0.8);
+    width: 20%;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.type-svg {
+    margin-left: 0;
+}
+
+.type-svg svg {
+    fill: black;
+    height: 1rem
+}
+
+
+.author .author-image{
+    height: 100%;
+    position: relative;
+}
+
+.author .author-name{
+    position: relative;
+    margin-left: 10%;
+    cursor: pointer;
+}
+
+
+.row .price {
+    position: absolute;
+    margin-left: 49%;
+    display: flex;
+}
+
+.row .graph{
+    height: 3rem;
+    margin-left: 56%;
+    position: absolute;
+}
+
+.row .available{
+    position: absolute;
+    margin-left: 75%;
+}
+
+
+.row .rmv {
+    position: absolute;
+    right: 3%;
+    cursor: pointer;
+}
+
+.rmv svg {
+    fill: #7216f4;
+    height: 1.5rem;
+}
+
+
+/* ROWS ________________ ROWS */
+
+.category-table .row {
+    width: 100%;
+    display: flex;
+    height: 3rem;
+    align-items: center;
+    border-bottom: 3px solid #7216f4;  
+}
+
+
+.row .numb {
+    margin-left: 1.5rem;
+}
+
+.row .title {
+    position: absolute;
+    margin-left: 5%;
+    height: calc(3rem *0.8);
+    max-width: 20%;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.title .image-song{
+    height: 100%;
+    position: relative;
+}
+
+.title .song-name{
+    position: relative;
+    margin-left: 10%;
+    cursor: pointer;
+    height: 1rem;
+    white-space: nowrap;
+}
+
+.row .author {
+    position: absolute;
+    margin-left: 27.5%;
+    height: calc(3rem *0.8);
+    max-width: 20%;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.author .author-image{
+    height: 100%;
+    position: relative;
+}
+
+.author .author-name{
+    position: relative;
+    margin-left: 10%;
+    cursor: pointer;
+    height: 1rem;
+    white-space: nowrap;
+}
+
+
+.row .price {
+    position: absolute;
+    margin-left: 49%;
+}
+
+.row .graph{
+    height: 3rem;
+    margin-left: 56%;
+    position: absolute;
+}
+
+.row .available{
+    position: absolute;
+    margin-left: 75%;
+}
+
+#leaderboard {
+    display: none;
+}
+
+#table-all {
+    display: none;
+}
+
+#transaction-table {
+    display: none;
+}
+
+.switch-button:first-of-type {
+    border-bottom: 3px solid #7216f4;
+}
+
+/* SEE DETAILS */
+
+#see-details {
+    cursor: pointer !important;
+    margin-top: 10px !important;
+    margin-left: 0 !important;
+    font-size: 1.2vw;
+}
+
+.screen {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    background-color: black;
+    opacity: 0.6;
+    z-index: 1;
+    display: none;
+}
+
+
+.information {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 30vw;
+    width: 25vw;
+    left: 40%;
+    top: 20%;
+    border: 2px solid #7216f4;
+    background-color: black;
+    z-index: 2;
+    color: white;
+    display: none;
+
+}
+
+.close {
+    height: 1.5rem;
+    fill: white;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
+.detail {
+    display: flex;
+    width: 80%;
+    justify-content: space-between;
+    margin-top: 4rem;
+    border-bottom: 1px solid grey;
+    align-items: center;
+    font-size: 1.25vw;
+    font-size: 1vw;
+    margin-top: 1rem;
+    position: relative;
+}
+
+.image-detail {
+    width: 2vw;
+    height: 2vw;
+    background-position: center center;
+    background-size: cover;
+}
+
+#save {
+    border: 3px solid white;
+    padding: 1rem 5rem 1rem 5rem;
+    color: white;
+    transition: 0.5s ease-in-out;
+    border-radius: 10px;
+    margin-top: auto;
+    margin-bottom: 10px;
+}
+
+#save:hover {
+    background-color: #7216f4;
+}
+
+/* GRAPH ___________________________ GRAPH */
+
+/* Style the x-axis and y-axis ticks and labels */
+#chart-container {
+    margin: 20px;
+}
+
+/* Style the bars in the chart */
+.bar {
+    fill: steelblue; /* Change the color of the bars */
+}
+
+/* Style the x-axis and y-axis ticks and labels */
+.x-axis path,
+.x-axis line,
+.y-axis path,
+.y-axis line {
+    fill: none;
+    shape-rendering: crispEdges;
+}
+
+.x-axis text {
+    font-size: 12px;
+    text-anchor: middle;
+}
+
+.y-axis text {
+    font-size: 12px;
+}
+
+/* Style chart title and labels if you have them */
+.chart-title {
+    font-size: 18px;
+    font-weight: bold;
+    text-anchor: middle;
+}
+
+.axis-label {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+path.line {
+    fill: none;
+    stroke: #7216f4; /* Yellow color */
+    stroke-width: 3.5;
+}
+
+/* Style for scatter dots */
+circle {
+    fill: #0000FF; /* Blue color */
+}
+  
+/* Tooltip Styles */
+.tooltip {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.8); /* Tooltip background color */
+    color: #fff; /* Tooltip text color */
+    padding: 5px 10px; /* Padding inside the tooltip */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 12px; /* Font size */
+    pointer-events: none; /* Ensure the tooltip doesn't interfere with mouse events */
+    z-index: 2;
+}
+
+/* Highlight Circle Styles */
+.highlight-circle {
+    fill: red !important; /* Circle fill color */
+    stroke: #000; /* Circle border color */
+    stroke-width: 2; /* Border thickness */
+    pointer-events: none; /* Ensure the circle doesn't interfere with mouse events */
+}
+
+.datetime-text {
+    display: none;
+}
+
+#Xtooltip {
+    display: none;
+    position: absolute;
+}
+#Ytooltip {
+    display: none;
+    position: absolute;
+}
+
+.edit-button {
+    border: 3px solid #7216f4;
+    border-radius: 25px;
+    background-color: black;
+    font-weight: 500;
+    color: white;
+    opacity: 0.9;
+    margin-left: 10px;
+}
+
+.edit-input {
+    background-color: black;
+    color: white;
+    font-weight: 500;
+    border-radius: 15px;
+    border: 2px solid #7216f4;
+}

@@ -6,13 +6,13 @@ Murilex was an early-stage concept for a platform that would allow retail invest
 
 Project Vision:
 
-- Our goal was to build a transparent, accessible marketplace where anyone could:
+Our goal was to build a transparent, accessible marketplace where anyone could:
 
-- Invest in songs or catalogs and earn a share of streaming revenue
+- Invest in songs or catalogs and earn a share of streaming revenue.
 
-- Discover new artists based on financial performance
+- Discover new artists based on financial performance.
 
-- Support creators while benefiting from their success
+- Support creators while benefiting from their success.
 
 Status:
 
@@ -20,10 +20,10 @@ Murilex was developed as a passion project while we were in university. Although
 
 This Repo Includes:
 
-- Project documentation and concept outlines
+- Project documentation and concept outlines.
 
-- Early product architecture and market research
+- Early product architecture and market research.
 
-- Wireframes, mockups, and notes on implementation paths
+- Wireframes, mockups, and notes on implementation paths.
 
-- Thoughts on regulation, scalability, and business models
+- Thoughts on regulation, scalability, and business models.
